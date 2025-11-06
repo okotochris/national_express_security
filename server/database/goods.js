@@ -5,10 +5,11 @@ async function goods(){
             id SERIAL PRIMARY KEY,
             senderName TEXT,
             receiverName TEXT,
-            trackingNumber TEXT,
+            trackingNumber TEXT UNIQUE,
             description TEXT,
             weight TEXT,
-            destination TEXT
+            destination TEXT,
+            location TEXT
             )`)
          console.log("✅ Goods table created");
     } catch (err) {
