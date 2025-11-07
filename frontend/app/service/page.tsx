@@ -43,7 +43,7 @@ export default function ServicesSection() {
     <Header />
    <section className="relative w-full overflow-hidden">
   {/* Background image with dark overlay */}
-  <div className="relative mx-auto px-6 py-24 md:py-32 bg-[url('/image3.jpg')] bg-no-repeat bg-cover bg-center flex flex-col justify-center items-start">
+  <div className="relative mx-auto px-6 py-24 md:py-32 bg-[url('/image1.jpg')] bg-no-repeat bg-cover bg-center flex flex-col justify-center items-start">
     <div className="absolute inset-0 bg-black/50" /> {/* Dark overlay */}
 
     <motion.div

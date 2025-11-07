@@ -4,6 +4,8 @@ import { useState, useEffect, JSX } from "react";
 import { MapPin, Truck, Anchor, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Header from "../component/header";
+import Footer from "../component/footer";
 
 interface TrackingStep {
   label: string;
@@ -38,6 +40,8 @@ export default function TrackingLocation() {
   };
 
   return (
+    <>
+    <Header/>
     <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden bg-slate-100">
       {/* Background map image */}
       <Image
@@ -113,5 +117,7 @@ export default function TrackingLocation() {
         </div>
       </div>
     </section>
+    <Footer/>
+    </>
   );
 }

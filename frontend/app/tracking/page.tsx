@@ -5,22 +5,16 @@ import { motion } from "framer-motion";
 import { Search, Package } from "lucide-react";
 import Header from "../component/header";
 import Footer from "../component/footer";
+import { useRouter } from "next/navigation";
 
 export default function TrackingForm() {
+  const router = useRouter()
   const [mode, setMode] = useState<"tracking" | "container">("tracking");
   const [value, setValue] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!value) {
-      alert("Please enter a valid code or number");
-      return;
-    }
-    if (mode === "tracking") {
-      alert(`Searching by Tracking Code: ${value} (demo)`);
-    } else {
-      alert(`Searching by Container/Bill of Lading Number: ${value} (demo)`);
-    }
+    router.push('/dashboard')
   };
 
   return (

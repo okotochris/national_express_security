@@ -8,14 +8,16 @@ import ServicesSection from "./component/design";
 import Header from "./component/header";
 import IndustryCarousel from "./component/strategy";
 import Footer from "./component/footer";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const [trackId, setTrackId] = useState("");
+  const router = useRouter()
 
   function handleTrack(e: React.FormEvent) {
     e.preventDefault();
-    if (!trackId) return alert("Enter a tracking or booking reference (demo)");
-    alert(`Searching for: ${trackId} (demo)`);
+    // if (!trackId) return alert("Enter a tracking or booking reference (demo)");
+    router.push('/dashboard')
   }
 
   const news = [
@@ -93,24 +95,27 @@ export default function HomePage() {
       id="track"
       className="mt-8 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-6 max-w-3xl mx-auto flex flex-col items-center justify-center md:flex-row gap-4"
     >
-      <form onSubmit={handleTrack} className="flex-1">
-        <label className="text-xs text-slate-500">Booking / Container / B/L</label>
-        <input
-          value={trackId}
-          onChange={(e) => setTrackId(e.target.value)}
-          className="mt-1 w-full rounded-lg border px-4 py-3 outline-none bg-white text-black"
-          placeholder="Enter tracking number e.g. NESU1234567"
-        />
-        <p className="mt-2 text-sm text-slate-500">
-          Try: <span className="font-medium">NESU1234567</span> (demo)
-        </p>
-      </form>
-
-      <div className="flex items-end">
-        <button className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 transition text-white rounded-lg px-6 py-3 font-semibold shadow-md">
+      <form onSubmit={handleTrack} className="flex gap-1.5 items-center justify-center flex-wrap">
+        <div>
+          <label className="text-xs text-slate-500">Booking / Container / B/L</label>
+          <input
+            value={trackId}
+            onChange={(e) => setTrackId(e.target.value)}
+            className="mt-1 w-full rounded-lg border px-4 py-3 outline-none bg-white text-black"
+            placeholder="Enter tracking number e.g. NESU1234567"
+          />
+          <p className="mt-2 text-sm text-slate-500">
+            Try: <span className="font-medium">NESU1234567</span> (demo)
+          </p>
+        </div>
+        <div className="flex items-end">
+        <button type="submit" className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 transition text-white rounded-lg px-6 py-3 font-semibold shadow-md">
           Track
         </button>
       </div>
+      </form>
+
+      
     </motion.div>
   </div>
 </section>
