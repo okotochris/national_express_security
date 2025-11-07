@@ -81,7 +81,9 @@ const categories = [
 export default function IndustryCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
-  const router = useRouter()
+  const router = useRouter();
+  const autoPlayInterval = 5000; // Change image every 5 seconds
+
   // Adjust itemsPerView based on screen size
   useEffect(() => {
     const updateItems = () => {
@@ -95,6 +97,15 @@ export default function IndustryCarousel() {
     window.addEventListener("resize", updateItems);
     return () => window.removeEventListener("resize", updateItems);
   }, []);
+
+  // Auto-play functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      scrollRight();
+    }, autoPlayInterval);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, itemsPerView]); // Re-run when index or itemsPerView changes
 
   const scrollLeft = () => {
     setCurrentIndex((prev) =>
@@ -130,18 +141,18 @@ export default function IndustryCarousel() {
                 </p>
      </div>
 
-      {/* Left Button */}
+      {/* Left Button - At left edge, y-center */}
       <button
         onClick={scrollLeft}
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition opacity-80 hover:opacity-100"
       >
         <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 text-slate-800" />
       </button>
 
-      {/* Right Button */}
+      {/* Right Button - At right edge, y-center */}
       <button
         onClick={scrollRight}
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition opacity-80 hover:opacity-100"
       >
         <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7 text-slate-800" />
       </button>
