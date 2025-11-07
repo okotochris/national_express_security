@@ -5,8 +5,7 @@ import Image from "next/image";
 import Header from "../../component/header";
 import Footer from "../../component/footer";
 
-
-export default function ContainerShippingPage() {
+export default function CustomsClearancePage() {
   return (
     <>
       <Header />
@@ -20,10 +19,10 @@ export default function ContainerShippingPage() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-              Container Shipping
+              Customs Clearance
             </h1>
             <p className="text-lg md:text-xl text-emerald-100 mb-6">
-              Global scheduled sailings and dependable sea freight solutions that keep your business moving.
+              Smooth and compliant customs processes for import and export operations — minimizing delays, reducing costs, and ensuring your cargo moves across borders seamlessly.
             </p>
             <a
               href="/contact"
@@ -40,8 +39,8 @@ export default function ContainerShippingPage() {
             className="relative w-full h-[300px] md:h-[400px]"
           >
             <Image
-              src="/shipping1.jpg"
-              alt="Container Ship"
+              src="/customs-clearance.jpg"
+              alt="Customs clearance process"
               fill
               className="object-cover rounded-2xl shadow-lg"
               priority
@@ -59,38 +58,31 @@ export default function ContainerShippingPage() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-bold text-slate-800 mb-4"
           >
-            Connecting the World Through Reliable Shipping
+            Simplifying Global Trade Documentation
           </motion.h2>
           <p className="text-slate-600 max-w-3xl mx-auto">
-            Our container shipping solutions provide efficient, secure, and sustainable movement of goods 
-            across continents, bridging suppliers and markets with unparalleled precision. Whether it’s 
-            full-container loads (FCL) for streamlined bulk transport, less-than-container loads (LCL) 
-            for cost-optimized smaller consignments, or specialized reefer and hazardous cargo handling, 
-            we deliver unmatched flexibility, speed, and reliability with every shipment. Backed by cutting-edge 
-            technology like AI-driven route optimization and blockchain-secured tracking, we ensure your cargo 
-            arrives on time, intact, and with minimal carbon footprint—empowering your business to thrive 
-            in a global economy.
-
-
+            Our customs clearance services ensure every shipment meets international and local trade requirements.
+            From paperwork and tariff classifications to duty payments, we manage each step so your cargo can move
+            swiftly through customs without costly interruptions.
           </p>
         </div>
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
           {[
             {
-              img: "/shipping2.jpg",
-              title: "Global Network",
-              desc: "Scheduled sailings connecting major international ports for consistent delivery times.",
+              img: "/customs-clearance.jpg",
+              title: "Import & Export Documentation",
+              desc: "Complete management of bills of lading, invoices, packing lists, and certificates of origin.",
             },
             {
-              img: "/chemical2.jpg",
-              title: "End-to-End Logistics",
-              desc: "From port-to-port or door-to-door, we handle every step of your shipment with precision.",
+              img: "/supply1.jpg",
+              title: "Customs Brokerage",
+              desc: "Experienced agents ensuring accurate classification, valuation, and duty calculation.",
             },
             {
-              img: "/chemical1.jpg",
-              title: "Real-Time Visibility",
-              desc: "Track every container with advanced monitoring for full transparency and control.",
+              img: "/supply2.jpg",
+              title: "Trade Compliance Support",
+              desc: "We stay up to date with regulations to help your business comply with customs laws globally.",
             },
           ].map((item, i) => (
             <motion.div
@@ -119,12 +111,12 @@ export default function ContainerShippingPage() {
         </div>
       </section>
 
-      {/* Global Network Section */}
+      {/* Network Section */}
       <section className="relative py-24 bg-gradient-to-r from-blue-50 to-emerald-50 text-center">
         <div className="absolute inset-0 opacity-10">
           <Image
-            src="/world-map.png"
-            alt="Global shipping map"
+            src="/trade-map.png"
+            alt="Customs Network Map"
             fill
             className="object-cover"
           />
@@ -137,11 +129,12 @@ export default function ContainerShippingPage() {
           className="relative max-w-4xl mx-auto"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-            A Trusted Network Across Continents
+            Your Trusted Customs Partner
           </h2>
           <p className="text-slate-600 mb-8">
-            We collaborate with top global carriers and port operators to ensure your goods move efficiently and
-            safely — no matter where in the world they need to go.
+            From import licensing to bonded warehouse coordination, we provide full visibility and compliance at
+            every checkpoint. Our goal is to help you reduce clearance time, avoid penalties, and maintain a smooth
+            international logistics flow.
           </p>
           <a
             href="/contact"
@@ -160,10 +153,11 @@ export default function ContainerShippingPage() {
           transition={{ duration: 0.5 }}
           className="text-3xl font-bold mb-4"
         >
-          Move Your Business Forward with Confidence
+          Clear Borders. Move Forward.
         </motion.h2>
         <p className="max-w-2xl mx-auto mb-6 text-emerald-100">
-          Choose us for dependable, cost-efficient, and globally connected container shipping solutions.
+          Let us handle the complexities of customs so you can focus on growth. With our expert team and digital
+          solutions, border clearance becomes effortless and efficient.
         </p>
         <a
           href="/contact"

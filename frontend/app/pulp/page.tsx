@@ -43,7 +43,7 @@ export default function PulpPaperForestryPage() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/forestry-logistics.jpg"
+              src="/pulp1.jpg"
               alt="Forestry logistics transport"
               width={600}
               height={400}

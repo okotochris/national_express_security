@@ -43,7 +43,7 @@ export default function MiningPage() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/mining-equipment.jpg"
+              src="/mining1.jpg"
               alt="Mining Equipment Transport"
               width={600}
               height={400}

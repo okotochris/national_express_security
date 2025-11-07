@@ -43,7 +43,7 @@ export default function CarPartsPage() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/auto-logistics.jpg"
+              src="/carpart.jpg"
               alt="Automotive logistics"
               width={600}
               height={400}

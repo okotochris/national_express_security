@@ -43,7 +43,7 @@ export default function PlasticPage() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/plastic-factory.jpg"
+              src="/plastic1.jpg"
               alt="Plastic and Rubber Factory"
               width={600}
               height={400}

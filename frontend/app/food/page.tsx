@@ -44,7 +44,7 @@ export default function FoodAndBeveragePage() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/food-logistics.jpg"
+              src="/food1.jpg"
               alt="Food Logistics Operation"
               width={600}
               height={400}

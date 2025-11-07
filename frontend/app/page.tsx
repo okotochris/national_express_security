@@ -24,20 +24,23 @@ export default function HomePage() {
     {
       title: "Digital Solutions",
       image: "presenting.jpg",
-      content: "Tracking Your Shipment: Sign Up for Automatic Email Updates on NES.com",
+      content: "Tracking Your Shipment: Sign Up for Automatic Email Updates on nationalexpresssecurity.com",
       date: "08/04/2025",
+      url:"/news/digital"
     },
     {
       title: "United States",
       image: "image6.jpg",
       content: "NES's Andre Simha to Discuss Collaboration and Digital Transformation at MANIFEST24 in Las Vegas",
       date: "01/19/2024",
+      url:"/news/united"
     },
     {
       title: "United Arab Emirates",
       image: "image1.jpg",
       content: "NES’s CDIO André Simha to Speak at Future-Proof Technologies, Dubai",
       date: "11/29/2023",
+      url:"/news/arab"
     },
   ];
 
@@ -142,16 +145,16 @@ export default function HomePage() {
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "Container Shipping", desc: "Global scheduled sailings." },
-              { title: "Inland Logistics", desc: "Trucking & rail solutions." },
-              { title: "Customs Clearance", desc: "Import/export documentation." },
-              { title: "Supply Chain", desc: "Warehousing & distribution." },
+              { title: "Container Shipping", desc: "Global scheduled sailings.", url:"/service/shipping" },
+              { title: "Inland Logistics", desc: "Trucking & rail solutions.", url:"/service/logistic"},
+              { title: "Customs Clearance", desc: "Import/export documentation.", url:"/service/clearance" },
+              { title: "Supply Chain", desc: "Warehousing & distribution.", url:"/service/supply" },
             ].map((s) => (
               <article key={s.title} className="bg-white p-6 rounded-2xl shadow-sm">
                 <div className="h-12 w-12 rounded-md bg-slate-100 flex items-center justify-center font-bold">S</div>
                 <h3 className="mt-4 font-semibold">{s.title}</h3>
                 <p className="mt-2 text-sm text-slate-600">{s.desc}</p>
-                <Link href="#"><span className="mt-4 inline-block text-emerald-600 text-sm">Learn more →</span></Link>
+                <Link href={s.url}><span className="mt-4 inline-block text-emerald-600 text-sm">Learn more →</span></Link>
               </article>
             ))}
           </div>
@@ -202,7 +205,7 @@ export default function HomePage() {
                   <p className="mt-2 text-sm text-slate-600">{i.content}</p>
                   <div className="mt-4 flex items-center justify-between text-sm">
                     <span className="text-slate-500">{i.date}</span>
-                    <Link href="#"><span className="text-emerald-600">Read →</span></Link>
+                    <Link href={i.url}><span className="text-emerald-600">Read →</span></Link>
                   </div>
                 </div>
               </article>

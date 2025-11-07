@@ -6,14 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const categories = [
-  {
-    title: "Agriculture",
-    content:
-      "We support the movement of agricultural goods — grains, fertilizers, and machinery — ensuring seamless farm-to-market logistics through reliable supply chains and temperature-controlled solutions.",
-    image: "/agriculture.jpg",
-    url:"/agriculture"
-  },
-  {
+   {
     title: "Fruit",
     content:
       "Our cold-chain logistics keeps fruits fresh and nutritious from farm to international markets, with strict temperature control and fast transit times.",
@@ -40,6 +33,13 @@ const categories = [
       "Heavy-duty logistics for moving mining equipment, raw minerals, and resources from remote sites to global markets efficiently and safely.",
     image: "/mining.jpg",
     url:"mining"
+  },
+   {
+    title: "Agriculture",
+    content:
+      "We support the movement of agricultural goods — grains, fertilizers, and machinery — ensuring seamless farm-to-market logistics through reliable supply chains and temperature-controlled solutions.",
+    image: "/agriculture.jpg",
+    url:"/agriculture"
   },
   {
     title: "Plastic and Rubber Product",

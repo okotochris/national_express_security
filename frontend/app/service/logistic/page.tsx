@@ -5,8 +5,7 @@ import Image from "next/image";
 import Header from "../../component/header";
 import Footer from "../../component/footer";
 
-
-export default function ContainerShippingPage() {
+export default function InlandLogisticsPage() {
   return (
     <>
       <Header />
@@ -20,10 +19,10 @@ export default function ContainerShippingPage() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-              Container Shipping
+              Inland Logistics
             </h1>
             <p className="text-lg md:text-xl text-emerald-100 mb-6">
-              Global scheduled sailings and dependable sea freight solutions that keep your business moving.
+              Seamless trucking and rail logistics that connect ports, warehouses, and customers across the nation — ensuring your cargo moves efficiently from coast to city and beyond.
             </p>
             <a
               href="/contact"
@@ -40,8 +39,8 @@ export default function ContainerShippingPage() {
             className="relative w-full h-[300px] md:h-[400px]"
           >
             <Image
-              src="/shipping1.jpg"
-              alt="Container Ship"
+              src="/plastic.jpg"
+              alt="Inland Logistics - Truck and Rail"
               fill
               className="object-cover rounded-2xl shadow-lg"
               priority
@@ -59,38 +58,40 @@ export default function ContainerShippingPage() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-bold text-slate-800 mb-4"
           >
-            Connecting the World Through Reliable Shipping
+            Driving Efficiency Across Every Mile
           </motion.h2>
           <p className="text-slate-600 max-w-3xl mx-auto">
-            Our container shipping solutions provide efficient, secure, and sustainable movement of goods 
-            across continents, bridging suppliers and markets with unparalleled precision. Whether it’s 
-            full-container loads (FCL) for streamlined bulk transport, less-than-container loads (LCL) 
-            for cost-optimized smaller consignments, or specialized reefer and hazardous cargo handling, 
-            we deliver unmatched flexibility, speed, and reliability with every shipment. Backed by cutting-edge 
-            technology like AI-driven route optimization and blockchain-secured tracking, we ensure your cargo 
-            arrives on time, intact, and with minimal carbon footprint—empowering your business to thrive 
-            in a global economy.
-
-
+           Our inland logistics services seamlessly integrate state-of-the-art trucking 
+           fleets with extensive rail networks, ensuring the safe, swift, and cost-effective 
+           delivery of goods across diverse terrains and distances. By leveraging advanced GPS 
+           tracking and real-time monitoring systems, we minimize delays and optimize routes for 
+           maximum efficiency. Whether bridging bustling ports to high-volume factories, linking 
+           remote warehouses to urban distribution centers, or facilitating just-in-time deliveries 
+           to retail outlets, our tailored solutions adapt to your unique operational needs. 
+           We prioritize sustainability by incorporating eco-friendly vehicles and low-emission rail 
+           options, reducing your carbon footprint without compromising speed. With a team of certified 
+           professionals and robust contingency planning, we guarantee your supply chain remains reliable, 
+           resilient, and fully responsive at every critical stage, empowering your business to thrive in 
+           a dynamic global market.
           </p>
         </div>
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
           {[
             {
-              img: "/shipping2.jpg",
-              title: "Global Network",
-              desc: "Scheduled sailings connecting major international ports for consistent delivery times.",
+              img: "/plastic1.jpg",
+              title: "Nationwide Trucking",
+              desc: "Reliable long-haul and short-haul trucking that ensures on-time delivery and real-time tracking.",
             },
             {
-              img: "/chemical2.jpg",
-              title: "End-to-End Logistics",
-              desc: "From port-to-port or door-to-door, we handle every step of your shipment with precision.",
+              img: "/image3.jpg",
+              title: "Integrated Rail Solutions",
+              desc: "Cost-efficient and eco-friendly rail transport for bulk goods and intermodal containers.",
             },
             {
-              img: "/chemical1.jpg",
-              title: "Real-Time Visibility",
-              desc: "Track every container with advanced monitoring for full transparency and control.",
+              img: "/pulp2.jpg",
+              title: "Interconnected Network",
+              desc: "A seamless connection between ports, rail terminals, and road transport for smooth transitions.",
             },
           ].map((item, i) => (
             <motion.div
@@ -119,12 +120,12 @@ export default function ContainerShippingPage() {
         </div>
       </section>
 
-      {/* Global Network Section */}
+      {/* Network Section */}
       <section className="relative py-24 bg-gradient-to-r from-blue-50 to-emerald-50 text-center">
         <div className="absolute inset-0 opacity-10">
           <Image
-            src="/world-map.png"
-            alt="Global shipping map"
+            src="/map-route.png"
+            alt="Logistics Network Map"
             fill
             className="object-cover"
           />
@@ -137,11 +138,12 @@ export default function ContainerShippingPage() {
           className="relative max-w-4xl mx-auto"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-            A Trusted Network Across Continents
+            A Smarter Way to Move Goods Inland
           </h2>
           <p className="text-slate-600 mb-8">
-            We collaborate with top global carriers and port operators to ensure your goods move efficiently and
-            safely — no matter where in the world they need to go.
+            By combining advanced route optimization, digital tracking, and an experienced operations team, we
+            deliver goods with precision — minimizing delays and maximizing efficiency. Our inland logistics network
+            bridges the gap between global ports and local destinations.
           </p>
           <a
             href="/contact"
@@ -160,10 +162,11 @@ export default function ContainerShippingPage() {
           transition={{ duration: 0.5 }}
           className="text-3xl font-bold mb-4"
         >
-          Move Your Business Forward with Confidence
+          Powering Commerce with Reliable Land Transport
         </motion.h2>
         <p className="max-w-2xl mx-auto mb-6 text-emerald-100">
-          Choose us for dependable, cost-efficient, and globally connected container shipping solutions.
+          From trucks to trains, our inland logistics solutions ensure the steady flow of goods, connecting your
+          business to key destinations across the region.
         </p>
         <a
           href="/contact"

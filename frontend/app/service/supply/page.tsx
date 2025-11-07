@@ -5,14 +5,13 @@ import Image from "next/image";
 import Header from "../../component/header";
 import Footer from "../../component/footer";
 
-
-export default function ContainerShippingPage() {
+export default function SupplyChainPage() {
   return (
     <>
       <Header />
 
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-r from-emerald-700 to-blue-700 text-white py-20">
+      <section className="w-full bg-gradient-to-r from-blue-800 to-emerald-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -20,10 +19,12 @@ export default function ContainerShippingPage() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-              Container Shipping
+              Supply Chain
             </h1>
             <p className="text-lg md:text-xl text-emerald-100 mb-6">
-              Global scheduled sailings and dependable sea freight solutions that keep your business moving.
+              Efficient warehousing and distribution services designed to optimize your global supply chain.
+              From secure storage to on-time deliveries, we ensure your products move seamlessly from production
+              to your customers — safely, quickly, and cost-effectively.
             </p>
             <a
               href="/contact"
@@ -40,8 +41,8 @@ export default function ContainerShippingPage() {
             className="relative w-full h-[300px] md:h-[400px]"
           >
             <Image
-              src="/shipping1.jpg"
-              alt="Container Ship"
+              src="/section.jpg"
+              alt="Supply Chain Warehousing and Distribution"
               fill
               className="object-cover rounded-2xl shadow-lg"
               priority
@@ -59,38 +60,31 @@ export default function ContainerShippingPage() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-bold text-slate-800 mb-4"
           >
-            Connecting the World Through Reliable Shipping
+            Integrated Warehousing & Distribution Solutions
           </motion.h2>
           <p className="text-slate-600 max-w-3xl mx-auto">
-            Our container shipping solutions provide efficient, secure, and sustainable movement of goods 
-            across continents, bridging suppliers and markets with unparalleled precision. Whether it’s 
-            full-container loads (FCL) for streamlined bulk transport, less-than-container loads (LCL) 
-            for cost-optimized smaller consignments, or specialized reefer and hazardous cargo handling, 
-            we deliver unmatched flexibility, speed, and reliability with every shipment. Backed by cutting-edge 
-            technology like AI-driven route optimization and blockchain-secured tracking, we ensure your cargo 
-            arrives on time, intact, and with minimal carbon footprint—empowering your business to thrive 
-            in a global economy.
-
-
+            We provide flexible, scalable, and technology-driven warehousing and distribution solutions that help
+            businesses meet global demand efficiently. Our supply chain management ensures every product is stored,
+            tracked, and delivered with precision.
           </p>
         </div>
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
           {[
             {
-              img: "/shipping2.jpg",
-              title: "Global Network",
-              desc: "Scheduled sailings connecting major international ports for consistent delivery times.",
+              img: "/supply1.jpg",
+              title: "Warehousing Excellence",
+              desc: "Modern, climate-controlled warehouses with advanced inventory systems for optimal space and product care.",
             },
             {
-              img: "/chemical2.jpg",
-              title: "End-to-End Logistics",
-              desc: "From port-to-port or door-to-door, we handle every step of your shipment with precision.",
+              img: "/supply2.jpg",
+              title: "Global Distribution Network",
+              desc: "Seamless distribution through our network of carriers and logistics hubs for faster delivery worldwide.",
             },
             {
-              img: "/chemical1.jpg",
-              title: "Real-Time Visibility",
-              desc: "Track every container with advanced monitoring for full transparency and control.",
+              img: "/section.jpg",
+              title: "Inventory Management",
+              desc: "Real-time tracking, smart analytics, and digital reporting to maintain visibility and control at all times.",
             },
           ].map((item, i) => (
             <motion.div
@@ -98,7 +92,7 @@ export default function ContainerShippingPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-emerald-50 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
+              className="bg-blue-50 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
             >
               <div className="relative h-56 w-full">
                 <Image
@@ -109,7 +103,7 @@ export default function ContainerShippingPage() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-emerald-700 mb-2">
+                <h3 className="text-xl font-semibold text-blue-800 mb-2">
                   {item.title}
                 </h3>
                 <p className="text-slate-600 text-sm">{item.desc}</p>
@@ -119,12 +113,12 @@ export default function ContainerShippingPage() {
         </div>
       </section>
 
-      {/* Global Network Section */}
-      <section className="relative py-24 bg-gradient-to-r from-blue-50 to-emerald-50 text-center">
+      {/* Network Section */}
+      <section className="relative py-24 bg-gradient-to-r from-emerald-50 to-blue-50 text-center">
         <div className="absolute inset-0 opacity-10">
           <Image
-            src="/world-map.png"
-            alt="Global shipping map"
+            src="/logistics-network-map.png"
+            alt="Supply Chain Network"
             fill
             className="object-cover"
           />
@@ -137,11 +131,12 @@ export default function ContainerShippingPage() {
           className="relative max-w-4xl mx-auto"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-            A Trusted Network Across Continents
+            Connecting Every Link in Your Supply Chain
           </h2>
           <p className="text-slate-600 mb-8">
-            We collaborate with top global carriers and port operators to ensure your goods move efficiently and
-            safely — no matter where in the world they need to go.
+            Our warehousing and distribution network helps you reduce transit time, improve order fulfillment, and
+            lower overall logistics costs. With strategically placed facilities and efficient routing systems, we
+            make your global operations more agile and dependable.
           </p>
           <a
             href="/contact"
@@ -153,21 +148,22 @@ export default function ContainerShippingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-emerald-700 py-16 text-center text-white">
+      <section className="bg-blue-800 py-16 text-center text-white">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-3xl font-bold mb-4"
         >
-          Move Your Business Forward with Confidence
+          Smarter Storage. Faster Delivery.
         </motion.h2>
-        <p className="max-w-2xl mx-auto mb-6 text-emerald-100">
-          Choose us for dependable, cost-efficient, and globally connected container shipping solutions.
+        <p className="max-w-2xl mx-auto mb-6 text-blue-100">
+          From local warehousing to international distribution, we combine technology and experience to give your
+          supply chain a competitive edge.
         </p>
         <a
           href="/contact"
-          className="bg-white text-emerald-700 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition"
+          className="bg-white text-blue-800 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition"
         >
           Get Started
         </a>

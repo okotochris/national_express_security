@@ -43,7 +43,7 @@ export default function ChemicalPage() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/chemical-plant.jpg"
+              src="/chemical1.jpg"
               alt="Chemical Plant Logistics"
               width={600}
               height={400}

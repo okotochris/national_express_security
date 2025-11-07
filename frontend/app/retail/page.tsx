@@ -43,7 +43,7 @@ export default function RetailPage() {
             transition={{ duration: 0.6 }}
           >
             <Image
-              src="/retail-warehouse.jpg"
+              src="/fruit1.jpg"
               alt="Retail warehouse logistics"
               width={600}
               height={400}
