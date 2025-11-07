@@ -1,88 +1,89 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const categories = [
-   {
+  {
     title: "Fruit",
     content:
       "Our cold-chain logistics keeps fruits fresh and nutritious from farm to international markets, with strict temperature control and fast transit times.",
     image: "/fruit.jpg",
-    url:"/fruit"
+    url: "/fruit",
   },
   {
     title: "Pharmaceutical",
     content:
       "We transport sensitive medical goods with regulatory compliance, secure handling, and temperature-controlled solutions to maintain product integrity.",
     image: "/pharma.jpg",
-    url:"/pharmacy"
+    url: "/pharmacy",
   },
   {
     title: "Cars Part",
     content:
       "From engines to small components, we ensure reliable and timely delivery to assembly lines and distributors through optimized automotive logistics.",
     image: "/carparts.jpg",
-    url:"carpart"
+    url: "/carpart",
   },
   {
     title: "Mining and Minerals",
     content:
       "Heavy-duty logistics for moving mining equipment, raw minerals, and resources from remote sites to global markets efficiently and safely.",
     image: "/mining.jpg",
-    url:"mining"
+    url: "/mining",
   },
-   {
+  {
     title: "Agriculture",
     content:
       "We support the movement of agricultural goods — grains, fertilizers, and machinery — ensuring seamless farm-to-market logistics through reliable supply chains and temperature-controlled solutions.",
     image: "/agriculture.jpg",
-    url:"/agriculture"
+    url: "/agriculture",
   },
   {
     title: "Plastic and Rubber Product",
     content:
       "Comprehensive logistics solutions for plastic and rubber industries, supporting international trade with flexible, cost-effective transport.",
     image: "/plastic.jpg",
-    url:"/plastic"
+    url: "/plastic",
   },
   {
     title: "Chemical and Petrochemical",
     content:
       "Specialized handling and secure transport of hazardous and non-hazardous chemicals with safety as top priority.",
     image: "/chemical.jpg",
-    url:"/chemical"
+    url: "/chemical",
   },
   {
     title: "Food and Beverage",
     content:
       "Reliable logistics for perishable and non-perishable food items, ensuring freshness, safety, and timely delivery across continents.",
     image: "/food.jpg",
-    url:"/food"
+    url: "/food",
   },
   {
     title: "Pulp Paper and Forestry Product",
     content:
       "Efficient movement of forestry products and pulp & paper materials to support industries and global supply chains.",
     image: "/pulp.jpg",
-    url:"/pulp"
+    url: "/pulp",
   },
   {
     title: "Retail",
     content:
       "Agile logistics solutions for retail businesses, supporting fast restocking, warehousing, and last-mile delivery worldwide.",
     image: "/retail.jpg",
-    url:'retail'
+    url: "/retail",
   },
 ];
 
 export default function IndustryCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
+  const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
-  const autoPlayInterval = 5000; // Change image every 5 seconds
+  const autoPlayInterval = 5000; // 5 seconds
 
   // Adjust itemsPerView based on screen size
   useEffect(() => {
@@ -98,26 +99,25 @@ export default function IndustryCarousel() {
     return () => window.removeEventListener("resize", updateItems);
   }, []);
 
-  // Auto-play functionality
-  useEffect(() => {
-    const interval = setInterval(() => {
-      scrollRight();
-    }, autoPlayInterval);
-
-    return () => clearInterval(interval);
-  }, [currentIndex, itemsPerView]); // Re-run when index or itemsPerView changes
-
-  const scrollLeft = () => {
+  // Scroll functions wrapped with useCallback for stable references
+  const scrollLeft = useCallback(() => {
     setCurrentIndex((prev) =>
       prev === 0 ? categories.length - itemsPerView : prev - 1
     );
-  };
+  }, [itemsPerView]);
 
-  const scrollRight = () => {
+  const scrollRight = useCallback(() => {
     setCurrentIndex((prev) =>
       prev >= categories.length - itemsPerView ? 0 : prev + 1
     );
-  };
+  }, [itemsPerView]);
+
+  // Auto-play functionality with hover pause
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(scrollRight, autoPlayInterval);
+    return () => clearInterval(interval);
+  }, [scrollRight, autoPlayInterval, isHovered]);
 
   const totalSlides = categories.length - itemsPerView + 1;
 
@@ -126,22 +126,24 @@ export default function IndustryCarousel() {
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
         Industries We Serve
       </h2>
-     <div className=" my-5">
-         <p className="text-slate-600 mt-3">
-                At NES we pride ourselves on being a global container shipping company that delivers 
-                tailored solutions designed to meet the specific needs of each of our customers. 
-                Regardless of your cargo type, or final destination, we offer versatile solutions 
-                that cover air, land, and sea.
-                </p>
-                 <p className="text-slate-600 mt-3">
-                Thanks to the extensive capacity of our container fleet, NES is the trusted transportation 
-                partner and shipping company for numerous companies the world over. Combining this with 
-                our global port coverage and extensive equipment availability means, we are able to deliver a 
-                professional, efficient shipping service, tailored to the specific needs of your business.
-                </p>
-     </div>
 
-      {/* Left Button - At left edge, y-center */}
+      <div className="my-5 text-center max-w-4xl mx-auto">
+        <p className="text-slate-600 mt-3">
+          At NES, we pride ourselves on being a global container shipping
+          company that delivers tailored solutions designed to meet the specific
+          needs of each of our customers. Regardless of your cargo type or
+          destination, we offer versatile logistics services that cover air,
+          land, and sea.
+        </p>
+        <p className="text-slate-600 mt-3">
+          With our extensive fleet capacity, global port coverage, and advanced
+          tracking systems, NES is the trusted logistics partner for companies
+          around the world. We ensure professional, efficient, and reliable
+          shipping tailored to the specific requirements of your business.
+        </p>
+      </div>
+
+      {/* Left Button */}
       <button
         onClick={scrollLeft}
         className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition opacity-80 hover:opacity-100"
@@ -149,7 +151,7 @@ export default function IndustryCarousel() {
         <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 text-slate-800" />
       </button>
 
-      {/* Right Button - At right edge, y-center */}
+      {/* Right Button */}
       <button
         onClick={scrollRight}
         className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition opacity-80 hover:opacity-100"
@@ -158,7 +160,11 @@ export default function IndustryCarousel() {
       </button>
 
       {/* Carousel */}
-      <div className="overflow-hidden">
+      <div
+        className="overflow-hidden"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{
@@ -189,9 +195,10 @@ export default function IndustryCarousel() {
                   <p className="text-slate-600 text-sm md:text-base line-clamp-4">
                     {item.content}
                   </p>
-                  <button 
-                    onClick={()=>router.push(item.url)}
-                    className="mt-auto text-blue-600 font-semibold hover:underline text-sm md:text-base">
+                  <button
+                    onClick={() => router.push(item.url)}
+                    className="mt-auto text-blue-600 font-semibold hover:underline text-sm md:text-base"
+                  >
                     Read More →
                   </button>
                 </div>

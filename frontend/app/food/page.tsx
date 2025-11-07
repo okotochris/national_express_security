@@ -72,7 +72,7 @@ export default function FoodAndBeveragePage() {
               safely to local and international markets.
             </p>
             <p className="text-slate-700 leading-relaxed">
-              Whether it's temperature-controlled storage, express air freight,
+              Whether it is temperature-controlled storage, express air freight,
               or sustainable packaging solutions — we handle every detail with
               precision and care.
             </p>
@@ -142,7 +142,7 @@ export default function FoodAndBeveragePage() {
         </h2>
         <p className="max-w-2xl mx-auto mb-6 text-slate-100">
           From farm to fork, we ensure your food and beverages arrive safe,
-          fresh, and ready for your customers — anywhere in the world.
+          fresh, and ready for your customers to anywhere in the world.
         </p>
         <a
           href="/contact"

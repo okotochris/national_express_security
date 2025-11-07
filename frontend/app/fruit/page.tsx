@@ -60,7 +60,7 @@ export default function FruitPage() {
               Keeping Fruits Fresh Every Step of the Way
             </h2>
             <p className="text-slate-700 leading-relaxed mb-4">
-              Our cold-chain logistics ensure your fruits arrive in perfect condition — whether they're destined for
+              Our cold-chain logistics ensure your fruits arrive in perfect condition — whether they are destined for
               supermarkets, wholesalers, or international markets. Using temperature-controlled vehicles and
               humidity-managed storage, we preserve freshness, flavor, and nutritional quality.
             </p>
