@@ -11,6 +11,7 @@ import {
   Truck,
   ShieldCheck,
   Users,
+  PhoneCall
 } from "lucide-react";
 import Header from "../component/header";
 import { motion } from "framer-motion"; // ✅ Correct import (not motion/react)
@@ -133,15 +134,19 @@ const openTawk = () => {
             <div className="space-y-3 text-slate-700">
               <div className="flex items-center gap-2">
                 <Phone className="w-5 h-5 text-emerald-600" />
-                <span>+234 800 123 4567</span>
+                <span>+44-745-939-3722</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <PhoneCall className="w-5 h-5 text-emerald-600" />
+                <span>+44-744-015-7999</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-5 h-5 text-emerald-600" />
-                <span>support@yourcompany.com</span>
+                <span>admin@nationalexpresssecurity.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-emerald-600" />
-                <span>25 Marina Road, Lagos, Nigeria</span>
+                <span>Head office: 15B QB, Street, Off Avenue Edet, London</span>
               </div>
               <div className="flex items-center gap-2">
                 <Globe className="w-5 h-5 text-emerald-600" />
