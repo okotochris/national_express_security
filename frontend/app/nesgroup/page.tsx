@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {ShieldCheck, Clock, Users, Globe, Award, Building } from "lucide-react";
 import Header from "../component/header";
-import Footer from "../component/footer"; // Assuming Footer component exists from previous
+import Footer from "../component/footer"; 
+import Image from "next/image";
 
 export default function NESGroupPage() {
   const [loading, setLoading] = useState(true);
@@ -129,7 +130,7 @@ export default function NESGroupPage() {
               className="order-1 lg:order-2"
             >
               <div className="relative h-96 bg-gray-300 rounded-2xl overflow-hidden">
-                <img
+                <Image
                   src="/group-timeline.jpg" // Placeholder for timeline graphic
                   alt="NES Group Timeline"
                   className="w-full h-full object-cover"
@@ -227,7 +228,7 @@ export default function NESGroupPage() {
             Ready to Partner with NES Group?
           </h2>
           <p className="text-xl mb-8 leading-relaxed">
-            Join thousands of businesses trusting us for their logistics journey. Let's discuss how we can elevate your operations.
+            Join thousands of businesses trusting us for their logistics journey. Lets discuss how we can elevate your operations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="px-8 py-4 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-gray-100 transition">

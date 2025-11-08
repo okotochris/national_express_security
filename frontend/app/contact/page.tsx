@@ -18,6 +18,7 @@ import { motion } from "framer-motion"; // ✅ Correct import (not motion/react)
 import { useHandleEmail } from "../component/handleContact";
 import Loader from "../component/loading";
 import Footer from "../component/footer";
+import Image from "next/image";
 
 export default function ContactSection() {
   // ✅ Load chat widget once
@@ -274,7 +275,7 @@ const openTawk = () => {
                   className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
                   <div className="relative h-64 bg-gray-300">
-                    <img
+                    <Image
                       src={member.image}
                       alt={`${member.name}, ${member.title}`}
                       className="w-full h-full object-cover"

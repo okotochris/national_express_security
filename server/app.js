@@ -13,14 +13,14 @@ app.use(goodsRoute)
 app.use(contact)
 app.use(loginRoute)
 
-async function productionTable() {
-  try {
-    await db.query("DROP TABLE IF EXISTS goods");
-    console.log("✅ goods table dropped");
-  } catch (error) {
-    console.error("❌ Error dropping table:", error);
-  }
-}
+// async function productionTable() {
+//   try {
+//     await db.query("DROP TABLE IF EXISTS goods");
+//     console.log("✅ goods table dropped");
+//   } catch (error) {
+//     console.error("❌ Error dropping table:", error);
+//   }
+// }
 
 productionTable()
 const PORT = process.env.PORT || 3000

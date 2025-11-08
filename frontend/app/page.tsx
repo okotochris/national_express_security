@@ -9,15 +9,38 @@ import Header from "./component/header";
 import IndustryCarousel from "./component/strategy";
 import Footer from "./component/footer";
 import { useRouter } from "next/navigation";
+const server = process.env.NEXT_PUBLIC_API_URL 
+
+
 
 export default function HomePage() {
   const [trackId, setTrackId] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  function handleTrack(e: React.FormEvent) {
+  async function handleTrack(e: React.FormEvent) {
     e.preventDefault();
-    // if (!trackId) return alert("Enter a tracking or booking reference (demo)");
-    router.push('/dashboard')
+    // if (!trackId) 
+    try {
+  const res = await fetch(`${server}/api/tracking_no/${trackId}`);
+
+  if (res.ok) {
+    const data = await res.json();
+    localStorage.setItem('data', JSON.stringify(data))
+    router.push('/dashboard'); // or navigate to a page with tracking details
+  } else if (res.status === 404) {
+    alert("Tracking number not found");
+  } else {
+    alert("Server error. Please try again.");
+  }
+} catch (error) {
+  console.error(error);
+  alert("Network error. Please try again.");
+} finally {
+  setIsLoading(false); // optional: if you have a loading state
+}
+
+   
   }
 
   const news = [
@@ -112,8 +135,8 @@ export default function HomePage() {
           </p>
         </div>
         <div className="flex items-end">
-        <button type="submit" className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 transition text-white rounded-lg px-6 py-3 font-semibold shadow-md">
-          Track
+        <button disabled={isLoading} type="submit" className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 transition text-white rounded-lg px-6 py-3 font-semibold shadow-md">
+          {isLoading ? "Loading" : "Track"}
         </button>
       </div>
       </form>

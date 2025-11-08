@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useState, FormEvent, ChangeEvent } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import Header from "../component/header";
+import { useRouter } from "next/navigation";
+import {Trash2 } from "lucide-react";
+const server = process.env.NEXT_PUBLIC_API_URL
 
 // Define a type for goods
 interface Good {
@@ -11,6 +14,8 @@ interface Good {
   receivername: string;
   destination: string;
   location: string;
+  status: string;
+  arrivetime:string;
 }
 
 // Define a type for the form data
@@ -19,25 +24,34 @@ interface FormData {
   receiverName: string;
   trackingNumber: string;
   description: string;
-  weight: string;
+  arriveTime: string;
   destination: string;
+  status: string;
 }
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [goods, setGoods] = useState<Good[]>([]);
   const [showForm, setShowForm] = useState(false);
+  const [editingStatusId, setEditingStatusId] = useState<number | null>(null);
   const [formData, setFormData] = useState<FormData>({
     senderName: "",
     receiverName: "",
-    trackingNumber: "",
+    trackingNumber: generateTrackingCode(),
     description: "",
-    weight: "",
+    arriveTime:"", 
     destination: "",
+    status:""
   });
-
+  useEffect(()=>{
+    const store = localStorage.getItem("user")
+    if(!store){
+      router.push('/login')
+    }
+  })
   // Fetch goods from backend
   const fetchGoods = async (): Promise<void> => {
-    const res = await fetch("http://localhost:3000/api/goods");
+    const res = await fetch(`${server}/api/goods`);
     const data = await res.json();
     setGoods(data);
     console.log(data);
@@ -52,7 +66,7 @@ export default function AdminDashboard() {
     e.preventDefault();
     console.log(formData);
 
-    const res = await fetch("http://localhost:3000/api/register-goods", {
+    const res = await fetch(`${server}/api/register-goods`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -72,11 +86,9 @@ export default function AdminDashboard() {
   };
 
   // Update location
-  const handleLocationUpdate = async (id: number): Promise<void> => {
-    const newLocation = prompt("Enter new location:");
-    if (!newLocation) return;
+  const handleLocationUpdate = async (id: number,  newLocation:string): Promise<void> => {
 
-    await fetch(`http://localhost:3000/api/goods/location?id=${id}`, {
+    await fetch(`${server}/api/goods/location?id=${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ location: newLocation }),
@@ -84,12 +96,63 @@ export default function AdminDashboard() {
 
     fetchGoods();
   };
+const handleDelete = async (id: number) => {
+  try {
+    const res = await fetch(`${server}/api/delete?id=${id}`, { method: "DELETE" });
 
+    if (res.ok) {
+      // Remove the deleted item from the state
+      setGoods((prev) => prev.filter((item) => item.id !== id));
+    } else {
+      console.error("Failed to delete item");
+    }
+  } catch (error) {
+    console.error("Error deleting item:", error);
+  }
+};
+const handleStatus = async (id: number, status: string) => {
+  try {
+    const res = await fetch(`${server}/api/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
+
+    if (res.ok) {
+      // Update state locally
+      setGoods((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, status } : item
+        )
+      );
+      console.log("Status updated successfully");
+    } else {
+      console.error("Failed to update status");
+    }
+  } catch (err) {
+    console.error("Error updating status:", err);
+  } finally {
+    setEditingStatusId(null); // close dropdown after update
+  }
+};
   // Handle input change
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+): void => {
+  const { name, value } = e.target;
+  setFormData((prev) => ({ ...prev, [name]: value }));
+};
 
+function generateTrackingCode(): string {
+  const prefix = "NESU";
+  let digits = "";
+
+  for (let i = 0; i < 7; i++) {
+    digits += Math.floor(Math.random() * 10); // generates a random digit 0-9
+  }
+
+  return prefix + digits;
+}
   return (
     <>
       <Header />
@@ -111,6 +174,7 @@ export default function AdminDashboard() {
               <h2 className="text-xl font-bold mb-4">Register Goods</h2>
               <form onSubmit={handleRegister} className="grid gap-3">
                 {Object.keys(formData).map((key) => (
+                  key != "status" ?
                   <input
                     key={key}
                     name={key}
@@ -118,7 +182,20 @@ export default function AdminDashboard() {
                     className="border p-2 rounded"
                     onChange={handleInputChange}
                     value={formData[key as keyof typeof formData]}
-                  />
+                  />:
+                  <select
+                  className="border p-2 rounded"
+                  key={key}
+                  name={key}
+                  value={formData[key as keyof typeof formData]}
+                  onChange={handleInputChange}
+                >
+                  <option value="1">Ordered</option>
+                  <option value="2">In Transit</option>
+                  <option value="3">At Port</option>
+                  <option value="4">Delivered</option>
+                </select>
+
                 ))}
                 <div className="flex gap-3 mt-4">
                   <button
@@ -150,6 +227,8 @@ export default function AdminDashboard() {
                 <th className="p-3">Receiver</th>
                 <th className="p-3">Destination</th>
                 <th className="p-3">Location</th>
+                <th className="p-3">Status</th>
+                <th className="p-3">Arrive Time</th>
                 <th className="p-3">Action</th>
               </tr>
             </thead>
@@ -159,14 +238,56 @@ export default function AdminDashboard() {
                   <td className="p-3">{g.trackingnumber}</td>
                   <td className="p-3">{g.sendername}</td>
                   <td className="p-3">{g.receivername}</td>
-                  <td className="p-3">{g.destination}</td>
-                  <td className="p-3">{g.location}</td>
+                  <td className="p-3" >{g.destination}</td>
+                  <td
+                    className="p-3"
+                    contentEditable
+                    suppressContentEditableWarning={true}
+                    onBlur={(e) => handleLocationUpdate(g.id, e.currentTarget.textContent || "")}
+                  >
+                    {g.location}
+                  </td>
+                  <td
+                    className="p-3 cursor-pointer"
+                    onClick={() => setEditingStatusId(g.id)}
+                  >
+                    {editingStatusId === g.id ? (
+                      <select
+                        className="border p-1 rounded"
+                        value={g.status}
+                        autoFocus
+                        onChange={(e) => handleStatus(g.id, e.target.value)}
+                        onBlur={() => setEditingStatusId(null)} // close when user clicks away
+                      >
+                        <option value="1">Ordered</option>
+                        <option value="2">In Transit</option>
+                        <option value="3">At Port</option>
+                        <option value="4">Delivered</option>
+                      </select>
+                    ) : (
+                      <>
+                        {g.status === "1"
+                          ? "Ordered"
+                          : g.status === "2"
+                          ? "In Transit"
+                          : g.status === "3"
+                          ? "At Port"
+                          : g.status === "4"
+                          ? "Delivered"
+                          : "Unknown"}
+                      </>
+                    )}
+                  </td>
+
+
+                   <td className="p-3">{g.arrivetime}</td>
+                   
                   <td className="p-3">
                     <button
-                      onClick={() => handleLocationUpdate(g.id)}
+                      onClick={() => handleDelete(g.id)}
                       className="text-blue-600 hover:underline"
                     >
-                      Update Location
+                     <Trash2/>
                     </button>
                   </td>
                 </tr>

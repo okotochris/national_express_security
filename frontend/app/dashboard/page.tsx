@@ -6,24 +6,39 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "../component/header";
 import Footer from "../component/footer";
+import { useRouter } from "next/navigation";
 
 interface TrackingStep {
   label: string;
   icon: JSX.Element;
 }
-
+type Data = {
+  sendername:string
+  receivername :string
+  trackingnumber: string
+  description:string
+  weight:string
+  destination:string
+  location:string
+}
 export default function TrackingLocation() {
   const [currentStep, setCurrentStep] = useState(1);
+    const [data, setData] = useState<Data>( );
+    const router = useRouter()
 
   // You can fetch real shipment data here
   useEffect(() => {
-    // Demo auto step changer
-    const interval = setInterval(() => {
-      setCurrentStep((prev) => (prev < 4 ? prev + 1 : 1));
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, []);
+    const stored = localStorage.getItem("data")
+    if(stored){
+      const item = JSON.parse(stored)
+      setData(item)
+      setCurrentStep(item.status)
+      localStorage.removeItem("data")
+    }else{
+     return router.push('/tracking')
+    }
+    //
+  }, [router]);
 
   const steps: TrackingStep[] = [
     { label: "Ordered", icon: <MapPin className="w-5 h-5" /> },
@@ -66,11 +81,19 @@ export default function TrackingLocation() {
         <div className="flex flex-col gap-2 mb-6">
           <div className="flex justify-between text-sm">
             <span className="font-medium text-slate-700">Tracking Code:</span>
-            <span className="text-slate-600">{shipmentDetails.trackingCode}</span>
+            <span className="text-slate-600">{data?.trackingnumber}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="font-medium text-slate-700">Sender Name:</span>
+            <span className="text-slate-600">{data?.sendername}</span>
+          </div>
+           <div className="flex justify-between text-sm">
+            <span className="font-medium text-slate-700">Receiver Name:</span>
+            <span className="text-slate-600">{data?.receivername}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="font-medium text-slate-700">Current Location:</span>
-            <span className="text-slate-600">{shipmentDetails.currentLocation}</span>
+            <span className="text-slate-600">{data?.location}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="font-medium text-slate-700">Estimated Arrival:</span>

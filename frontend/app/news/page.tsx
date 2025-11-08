@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Header from "../component/header";
 import Footer from "../component/footer";
+import Image from "next/image";
 
 const news = [
   {
@@ -69,7 +70,7 @@ export default function NewsPage() {
             >
               {/* Image */}
               <div className="relative h-48 bg-gray-200">
-                <img
+                <Image
                   src={item.image}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
