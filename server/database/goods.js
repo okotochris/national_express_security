@@ -8,7 +8,9 @@ async function goods(){
             trackingNumber TEXT UNIQUE,
             description TEXT,
             weight TEXT,
+            arriveTime TEXT,
             destination TEXT,
+            status TEXT,
             location TEXT
             )`)
          console.log("✅ Goods table created");
