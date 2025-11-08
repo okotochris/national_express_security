@@ -33,11 +33,10 @@ export default function TrackingLocation() {
       const item = JSON.parse(stored)
       setData(item)
       setCurrentStep(item.status)
-      localStorage.removeItem("data")
     }else{
      return router.push('/tracking')
     }
-    //
+     
   }, [router]);
 
   const steps: TrackingStep[] = [

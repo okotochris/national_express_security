@@ -41,7 +41,7 @@ export default function AdminDashboard() {
     description: "",
     arriveTime:"", 
     destination: "",
-    status:""
+    status:"1"
   });
   useEffect(()=>{
     const store = localStorage.getItem("user")
@@ -189,6 +189,7 @@ function generateTrackingCode(): string {
                   name={key}
                   value={formData[key as keyof typeof formData]}
                   onChange={handleInputChange}
+                  
                 >
                   <option value="1">Ordered</option>
                   <option value="2">In Transit</option>
