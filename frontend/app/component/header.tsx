@@ -16,7 +16,7 @@ function Header() {
         <div className="flex items-center gap-6">
           <Link href="/">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-md bg-gradient-to-r from-emerald-600 to-sky-500 flex items-center justify-center text-white font-bold">NES</div>
+             <div className="w-15 h-15 rounded-md bg-[url('/logo.png')] bg-cover bg-center"></div>
               <span className="font-semibold text-lg">Logistics</span>
             </div>
           </Link>
