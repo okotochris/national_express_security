@@ -1,35 +1,22 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// app/layout.tsx
+import { ReactNode } from "react";
 import "./globals.css";
+import ChatWidget from "./chatWidget"; // <-- Client Component
 
+interface RootLayoutProps {
+  children: ReactNode;
+  params?: { locale?: string };
+}
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export default function RootLayout({ children }: RootLayoutProps) {
+  const defaultLocale = "en";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "National Express Security",
-  description: "Express delivery",
-  icons: '/logo.png', 
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang={defaultLocale}>
+      <body>
         {children}
+        {/* Chat widget will load on client-side only */}
+        <ChatWidget />
       </body>
     </html>
   );

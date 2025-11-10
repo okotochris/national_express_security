@@ -1,0 +1,12 @@
+{
+  "logo": "Logistique",
+  "nav": {
+    "services": "Services",
+    "tracking": "Suivi"
+  },
+  "search": {
+    "placeholder": "Rechercher expéditions, docs...",
+    "button": "Rechercher"
+  },
+  "contact": "Contacter les Ventes"
+}
