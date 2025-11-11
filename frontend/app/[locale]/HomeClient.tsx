@@ -143,7 +143,7 @@ export default function HomePage() {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem('data', JSON.stringify(data));
-        router.push('/dashboard');
+        router.push('/dashboard/en');
       } else if (res.status === 404) {
         alert(translatedStatic?.hero?.notFound || "Tracking number not found");
       } else {

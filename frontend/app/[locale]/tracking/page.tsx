@@ -66,7 +66,7 @@ export default function TrackingPage({ params }: { params: Promise<{ locale: str
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("data", JSON.stringify(data));
-        router.push("/dashboard");
+        router.push("/dashboard/en");
       } else if (res.status === 404) {
         alert("Tracking number not found");
       } else {
