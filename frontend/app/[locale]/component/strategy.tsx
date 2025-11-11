@@ -178,10 +178,10 @@ export default function IndustryCarousel() {
   }, [scrollRight, autoPlayInterval, isHovered]);
 
   const totalSlides = translatedCategories.length - itemsPerView + 1;
-      const url = usePathname()
+        const localeLink = (path: string) => `/${locale}${path}`;
     function navigate(path:string){
-   
-    router.push(`${url}${path}`)
+    
+      router.push(localeLink(path))
     }
   return (
     <section className="relative max-w-full mx-auto px-4 sm:px-6 md:px-8 py-16">
