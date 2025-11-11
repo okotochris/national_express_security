@@ -30,7 +30,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     if (res.ok) {
       localStorage.setItem("user", JSON.stringify(data.user));
-      router.push("/admin");
+      router.push("/admin/en");
     } else {
       setError(data.message || "Invalid credentials");
     }

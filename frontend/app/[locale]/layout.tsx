@@ -1,17 +1,19 @@
 import { ReactNode } from "react";
+import { notFound } from "next/navigation";
+import { locales, Locale } from "../../i18n/config";
 
-interface RootLayoutProps {
+interface LocaleLayoutProps {
   children: ReactNode;
-  params?: Promise<{ locale?: string }>; // ✅ params is always a Promise
+  params: Promise<{ locale: string }>; // <-- always a Promise
 }
 
-export default async function RootLayout({ children, params }: RootLayoutProps) {
-  const awaitedParams = params ? await params : {};
-  const locale = awaitedParams.locale;
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+  const awaitedParams = await params; // await the promise
+  const { locale } = awaitedParams;
 
-  return (
-    <html lang={locale ?? "en"}>
-      <body>{children}</body>
-    </html>
-  );
+  if (!locales.includes(locale as Locale)) {
+    notFound();
+  }
+
+  return <div data-locale={locale}>{children}</div>;
 }

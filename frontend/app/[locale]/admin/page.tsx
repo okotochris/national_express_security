@@ -46,7 +46,7 @@ export default function AdminDashboard() {
   useEffect(()=>{
     const store = localStorage.getItem("user")
     if(!store){
-      router.push('/login')
+      router.push('/login/en')
     }
   })
   // Fetch goods from backend
@@ -54,7 +54,6 @@ export default function AdminDashboard() {
     const res = await fetch(`${server}/api/goods`);
     const data = await res.json();
     setGoods(data);
-    console.log(data);
   };
 
   useEffect(() => {
