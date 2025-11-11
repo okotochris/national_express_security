@@ -66,7 +66,7 @@ export default function TrackingPage({ params }: { params: Promise<{ locale: str
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("data", JSON.stringify(data));
-        router.push("/dashboard/en");
+        router.push("/en/dashboard");
       } else if (res.status === 404) {
         alert("Tracking number not found");
       } else {
@@ -127,6 +127,7 @@ export default function TrackingPage({ params }: { params: Promise<{ locale: str
               type="submit"
               className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg px-6 py-3 transition"
             >
+            Track
               {isLoading ? "Loading..." : t.trackingButton}
             </button>
           </motion.form>

@@ -46,7 +46,7 @@ export default function AdminDashboard() {
   useEffect(()=>{
     const store = localStorage.getItem("user")
     if(!store){
-      router.push('/login/en')
+      router.push('/en/login')
     }
   })
   // Fetch goods from backend
