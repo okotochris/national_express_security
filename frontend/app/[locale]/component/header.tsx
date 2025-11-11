@@ -38,9 +38,7 @@ function Header() {
     const loadTranslations = async () => {
       try {
         const content = await import(`../../../locales/${locale}.json`).then((m) => m.default || {});
-        console.log(`Loaded content for ${locale}:`, content); // Debug: Inspect loaded JSON
-
-        // Deep merge with default to ensure all keys exist
+               // Deep merge with default to ensure all keys exist
         const safeContent: TranslatedStatic = {
           ...defaultContent,
           logo: content.logo || defaultContent.logo,
@@ -55,7 +53,7 @@ function Header() {
           contact: content.contact || defaultContent.contact,
         };
 
-        console.log(`Final translatedStatic for ${locale}:`, safeContent); // Debug: Verify merge
+       
         setTranslatedStatic(safeContent);
       } catch (err) {
         console.error(`Header translation error for ${locale}:`, err);

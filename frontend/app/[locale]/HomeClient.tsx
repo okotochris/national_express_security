@@ -101,25 +101,20 @@ export default function HomePage() {
 
       setIsLoading(true);
       try {
-        console.log("Sending home page content to translate API:", staticContent);
-
-        const res = await fetch("/api/translate", {
+              const res = await fetch("/api/translate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ content: staticContent, targetLocale: locale }),
         });
 
-        console.log(`API Response Status: ${res.status} ${res.statusText}`);
-
-        if (!res.ok) {
+               if (!res.ok) {
           console.error("Translate API error:", res.statusText);
           setTranslatedStatic(staticContent);
           return;
         }
 
         const data = await res.json();
-        console.log("Translated home page data:", data);
-
+     
         // Merge with fallback for any missing keys
         const safeData = { ...staticContent, ...data };
         setTranslatedStatic(safeData);
@@ -156,7 +151,7 @@ export default function HomePage() {
       setIsLoading(false);
     }
   }
-
+  const localeLink = (path: string) => `/${locale}${path}`;
   return (
     <div className="min-h-screen flex flex-col font-sans text-slate-800 bg-slate-50">
       {/* Header */}
@@ -256,7 +251,7 @@ export default function HomePage() {
                 <div className="h-12 w-12 rounded-md bg-slate-100 flex items-center justify-center font-bold">S</div>
                 <h3 className="mt-4 font-semibold">{s.title}</h3>
                 <p className="mt-2 text-sm text-slate-600">{s.desc}</p>
-                <Link href={s.url}>
+                <Link href={localeLink(s.url)}>
                   <span className="mt-4 inline-block text-emerald-600 text-sm">{translatedStatic.services.learnMore}</span>
                 </Link>
               </article>
@@ -266,7 +261,7 @@ export default function HomePage() {
                 <div className="h-12 w-12 rounded-md bg-slate-100 flex items-center justify-center font-bold">S</div>
                 <h3 className="mt-4 font-semibold">{s.title}</h3>
                 <p className="mt-2 text-sm text-slate-600">{s.desc}</p>
-                <Link href={s.url}>
+                <Link href={localeLink(s.url)}>
                   <span className="mt-4 inline-block text-emerald-600 text-sm">{translatedStatic.services.learnMore || "Learn more →"}</span>
                 </Link>
               </article>
@@ -318,7 +313,7 @@ export default function HomePage() {
                   <p className="mt-2 text-sm text-slate-600">{i.content}</p>
                   <div className="mt-4 flex items-center justify-between text-sm">
                     <span className="text-slate-500">{i.date}</span>
-                    <Link href={i.url}><span className="text-emerald-600">{translatedStatic.news.readMore}</span></Link>
+                    <Link href={localeLink(i.url)}><span className="text-emerald-600">{translatedStatic.news.readMore}</span></Link>
                   </div>
                 </div>
               </article>
@@ -334,7 +329,7 @@ export default function HomePage() {
                   <p className="mt-2 text-sm text-slate-600">{i.content}</p>
                   <div className="mt-4 flex items-center justify-between text-sm">
                     <span className="text-slate-500">{i.date}</span>
-                    <Link href={i.url}><span className="text-emerald-600">{translatedStatic.news.readMore || "Read →"}</span></Link>
+                    <Link href={localeLink(i.url)}><span className="text-emerald-600">{translatedStatic.news.readMore || "Read →"}</span></Link>
                   </div>
                 </div>
               </article>

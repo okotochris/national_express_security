@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, usePathname } from "next/navigation";
 
 const baseCategories = [
   {
@@ -178,7 +178,11 @@ export default function IndustryCarousel() {
   }, [scrollRight, autoPlayInterval, isHovered]);
 
   const totalSlides = translatedCategories.length - itemsPerView + 1;
-
+      const url = usePathname()
+    function navigate(path:string){
+   
+    router.push(`${url}${path}`)
+    }
   return (
     <section className="relative max-w-full mx-auto px-4 sm:px-6 md:px-8 py-16">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
@@ -242,7 +246,7 @@ export default function IndustryCarousel() {
                     {item.content}
                   </p>
                   <button
-                    onClick={() => router.push(item.url)}
+                    onClick={() => navigate(item.url)}
                     className="mt-auto text-blue-600 font-semibold hover:underline text-sm md:text-base"
                   >
                     {translatedStatic.readMore}
