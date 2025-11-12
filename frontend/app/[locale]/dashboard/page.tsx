@@ -20,6 +20,7 @@ type Data = {
   weight:string
   destination:string
   location:string
+  arrivetime:string
 }
 export default function TrackingLocation() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -75,7 +76,10 @@ export default function TrackingLocation() {
         <p className="text-sm text-slate-600 mb-4">
           Track your goods in real time and see their current location and status.
         </p>
-
+         <p className="text-sm text-slate-600 mb-4">
+            
+            {data?.description}
+          </p>
         {/* Shipment Info */}
         <div className="flex flex-col gap-2 mb-6">
           <div className="flex justify-between text-sm">
@@ -90,13 +94,14 @@ export default function TrackingLocation() {
             <span className="font-medium text-slate-700">Receiver Name:</span>
             <span className="text-slate-600">{data?.receivername}</span>
           </div>
+          
           <div className="flex justify-between text-sm">
             <span className="font-medium text-slate-700">Current Location:</span>
             <span className="text-slate-600">{data?.location}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="font-medium text-slate-700">Estimated Arrival:</span>
-            <span className="text-slate-600">{shipmentDetails.estimatedArrival}</span>
+            <span className="text-slate-600">{data?.arrivetime}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="font-medium text-slate-700">Status:</span>
