@@ -37,6 +37,7 @@ export default function AdminDashboard() {
   const [showForm, setShowForm] = useState(false);
   const [editingStatusId, setEditingStatusId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const [formData, setFormData] = useState<FormData>({
     senderName: "",
     receiverName: "",
@@ -104,6 +105,7 @@ export default function AdminDashboard() {
     fetchGoods();
   };
   const handleDelete = async (id: number) => {
+    setIsDeleting(true)
     try {
       const res = await fetch(`${server}/api/delete?id=${id}`, { method: "DELETE" });
 
@@ -115,6 +117,8 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error("Error deleting item:", error);
+    }finally{
+      setIsDeleting(false)
     }
   };
   const handleStatus = async (id: number, status: string) => {
@@ -322,7 +326,7 @@ export default function AdminDashboard() {
                       onClick={() => handleDelete(g.id)}
                       className="text-blue-600 hover:underline"
                     >
-                      <Trash2 />
+                      {isDeleting ? "Deleting...." : <Trash2 />}
                     </button>
                   </td>
                 </tr>
