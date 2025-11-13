@@ -163,6 +163,7 @@ export default function AdminDashboard() {
   return (
     <>
       <Header />
+     
       <section className="max-w-6xl mx-auto p-6">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">📋 Admin Dashboard</h1>
@@ -176,8 +177,10 @@ export default function AdminDashboard() {
 
         {/* Form Modal */}
         {showForm && (
-          <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+          <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+            
             <div className="bg-white p-6 rounded-lg w-full max-w-lg">
+               <div className="h-9"></div>
               <h2 className="text-xl font-bold mb-4">Register Goods</h2>
 
               <form onSubmit={handleRegister} className="grid gap-3">
