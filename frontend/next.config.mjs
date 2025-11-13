@@ -11,5 +11,15 @@ export default withNextIntl({
   typescript: {
     // Ignore TypeScript errors during build
     ignoreBuildErrors: true
-  }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**',  // Matches any path on Cloudinary (e.g., /quizup/image/upload/**)
+      },
+    ],
+  },
 });

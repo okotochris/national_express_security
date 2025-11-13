@@ -3,7 +3,7 @@
 import { useEffect, useState, FormEvent } from "react";
 import Header from "../component/header";
 import { useRouter } from "next/navigation";
-import {Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 const server = process.env.NEXT_PUBLIC_API_URL
 
 // Define a type for goods
@@ -15,7 +15,8 @@ interface Good {
   destination: string;
   location: string;
   status: string;
-  arrivetime:string;
+  arrivetime: string;
+  image: string
 }
 
 // Define a type for the form data
@@ -27,6 +28,7 @@ interface FormData {
   arriveTime: string;
   destination: string;
   status: string;
+  image: File | null;
 }
 
 export default function AdminDashboard() {
@@ -34,18 +36,20 @@ export default function AdminDashboard() {
   const [goods, setGoods] = useState<Good[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingStatusId, setEditingStatusId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<FormData>({
     senderName: "",
     receiverName: "",
     trackingNumber: generateTrackingCode(),
     description: "",
-    arriveTime:"", 
+    arriveTime: "",
     destination: "",
-    status:"1"
+    status: "1",
+    image: null,
   });
-  useEffect(()=>{
+  useEffect(() => {
     const store = localStorage.getItem("user")
-    if(!store){
+    if (!store) {
       router.push('/en/login')
     }
   })
@@ -63,29 +67,33 @@ export default function AdminDashboard() {
   // Register goods & generate receipt
   const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    console.log(formData);
+    setIsLoading(true)
+    try {
+      const form = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      form.append(key, value);
+    });
 
     const res = await fetch(`${server}/api/register-goods`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+      body: form, // ✅ don't set Content-Type manually
     });
 
     if (res.ok) {
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Receipt-${formData.trackingNumber}.pdf`;
-      a.click();
-
       setShowForm(false);
       fetchGoods();
+    } else {
+      console.error("Upload failed");
+    }
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setIsLoading(false)
     }
   };
 
   // Update location
-  const handleLocationUpdate = async (id: number,  newLocation:string): Promise<void> => {
+  const handleLocationUpdate = async (id: number, newLocation: string): Promise<void> => {
 
     await fetch(`${server}/api/goods/location?id=${id}`, {
       method: "PUT",
@@ -95,63 +103,63 @@ export default function AdminDashboard() {
 
     fetchGoods();
   };
-const handleDelete = async (id: number) => {
-  try {
-    const res = await fetch(`${server}/api/delete?id=${id}`, { method: "DELETE" });
+  const handleDelete = async (id: number) => {
+    try {
+      const res = await fetch(`${server}/api/delete?id=${id}`, { method: "DELETE" });
 
-    if (res.ok) {
-      // Remove the deleted item from the state
-      setGoods((prev) => prev.filter((item) => item.id !== id));
-    } else {
-      console.error("Failed to delete item");
+      if (res.ok) {
+        // Remove the deleted item from the state
+        setGoods((prev) => prev.filter((item) => item.id !== id));
+      } else {
+        console.error("Failed to delete item");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
     }
-  } catch (error) {
-    console.error("Error deleting item:", error);
-  }
-};
-const handleStatus = async (id: number, status: string) => {
-  try {
-    const res = await fetch(`${server}/api/status`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, status }),
-    });
+  };
+  const handleStatus = async (id: number, status: string) => {
+    try {
+      const res = await fetch(`${server}/api/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      });
 
-    if (res.ok) {
-      // Update state locally
-      setGoods((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, status } : item
-        )
-      );
-      console.log("Status updated successfully");
-    } else {
-      console.error("Failed to update status");
+      if (res.ok) {
+        // Update state locally
+        setGoods((prev) =>
+          prev.map((item) =>
+            item.id === id ? { ...item, status } : item
+          )
+        );
+        console.log("Status updated successfully");
+      } else {
+        console.error("Failed to update status");
+      }
+    } catch (err) {
+      console.error("Error updating status:", err);
+    } finally {
+      setEditingStatusId(null); // close dropdown after update
     }
-  } catch (err) {
-    console.error("Error updating status:", err);
-  } finally {
-    setEditingStatusId(null); // close dropdown after update
-  }
-};
+  };
   // Handle input change
-const handleInputChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-): void => {
-  const { name, value } = e.target;
-  setFormData((prev) => ({ ...prev, [name]: value }));
-};
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-function generateTrackingCode(): string {
-  const prefix = "NESU";
-  let digits = "";
+  function generateTrackingCode(): string {
+    const prefix = "NESU";
+    let digits = "";
 
-  for (let i = 0; i < 7; i++) {
-    digits += Math.floor(Math.random() * 10); // generates a random digit 0-9
+    for (let i = 0; i < 7; i++) {
+      digits += Math.floor(Math.random() * 10); // generates a random digit 0-9
+    }
+
+    return prefix + digits;
   }
-
-  return prefix + digits;
-}
   return (
     <>
       <Header />
@@ -171,24 +179,30 @@ function generateTrackingCode(): string {
           <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg w-full max-w-lg">
               <h2 className="text-xl font-bold mb-4">Register Goods</h2>
+
               <form onSubmit={handleRegister} className="grid gap-3">
-                {Object.keys(formData).map((key) => (
-                  key != "status" ?
-                  <input
-                    key={key}
-                    name={key}
-                    placeholder={key.replace(/([A-Z])/g, " $1")}
-                    className="border p-2 rounded"
-                    onChange={handleInputChange}
-                    value={formData[key as keyof typeof formData]}
-                  />:
-                  <select
-                  className="border p-2 rounded"
-                  key={key}
-                  name={key}
-                  value={formData[key as keyof typeof formData]}
+                {Object.keys(formData).map((key) => {
+                  // Skip status and image for dynamic text inputs
+                  if (key === "status" || key === "image") return null;
+
+                  return (
+                    <input
+                      key={key}
+                      name={key}
+                      placeholder={key.replace(/([A-Z])/g, " $1")}
+                      className="border p-2 rounded"
+                      onChange={handleInputChange}
+                      value={formData[key as keyof FormData] as string} // safe type cast
+                    />
+                  );
+                })}
+
+                {/* Status Dropdown */}
+                <select
+                  name="status"
+                  value={formData.status}
                   onChange={handleInputChange}
-                  
+                  className="border p-2 rounded"
                 >
                   <option value="1">Ordered</option>
                   <option value="2">In Transit</option>
@@ -196,16 +210,32 @@ function generateTrackingCode(): string {
                   <option value="4">Delivered</option>
                 </select>
 
-                ))}
+                {/* File Input for Image */}
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  className="border p-2 rounded"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setFormData((prev) => ({ ...prev, image: file }));
+                    }
+                  }}
+                />
+
+                {/* Buttons */}
                 <div className="flex gap-3 mt-4">
                   <button
                     type="submit"
+                    disabled={isLoading}
                     className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
                   >
-                    Save & Generate Receipt
+                    {isLoading ? "Uploading..." : "Save & Generate Receipt"}
                   </button>
                   <button
                     type="button"
+                    disabled={isLoading}
                     onClick={() => setShowForm(false)}
                     className="bg-gray-400 text-white px-4 py-2 rounded"
                   >
@@ -215,6 +245,7 @@ function generateTrackingCode(): string {
               </form>
             </div>
           </div>
+
         )}
 
         {/* Goods Table */}
@@ -229,6 +260,7 @@ function generateTrackingCode(): string {
                 <th className="p-3">Location</th>
                 <th className="p-3">Status</th>
                 <th className="p-3">Arrive Time</th>
+                <th className="p-3">Image</th>
                 <th className="p-3">Action</th>
               </tr>
             </thead>
@@ -269,25 +301,25 @@ function generateTrackingCode(): string {
                         {g.status === "1"
                           ? "Ordered"
                           : g.status === "2"
-                          ? "In Transit"
-                          : g.status === "3"
-                          ? "At Port"
-                          : g.status === "4"
-                          ? "Delivered"
-                          : "Unknown"}
+                            ? "In Transit"
+                            : g.status === "3"
+                              ? "At Port"
+                              : g.status === "4"
+                                ? "Delivered"
+                                : "Unknown"}
                       </>
                     )}
                   </td>
 
 
-                   <td className="p-3">{g.arrivetime}</td>
-                   
+                  <td className="p-3">{g.arrivetime}</td>
+                  <td className="p-3"><img src={g.image} height="50x" width="50px"/></td>
                   <td className="p-3">
                     <button
                       onClick={() => handleDelete(g.id)}
                       className="text-blue-600 hover:underline"
                     >
-                     <Trash2/>
+                      <Trash2 />
                     </button>
                   </td>
                 </tr>
