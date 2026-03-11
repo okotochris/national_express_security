@@ -1,0 +1,37 @@
+{
+  "Header": {
+    "title": "物流",
+    "services": "服务",
+    "tracking": "跟踪",
+    "contact": "联系销售",
+    "searchPlaceholder": "搜索发货、文件...",
+    "searchButton": "搜索"
+  },
+  "Common": {
+    "loading": "加载中...",
+    "error": "出了点问题",
+    "footer": "© 2025 National Express Security。保留所有权利。"
+  },
+  "HomePage": {
+    "title": "安全物流解决方案",
+    "subtitle": "快速、可靠的运输，配备顶级安全。",
+    "cta": "开始使用"
+  },
+  "ServicesPage": {
+    "title": "我们的服务",
+    "description": "从空运到安全仓储。",
+    "airFreight": "空运",
+    "seaFreight": "海运",
+    "warehousing": "仓储"
+  },
+  "TrackingPage": {
+    "title": "跟踪您的发货",
+    "inputLabel": "输入跟踪号",
+    "trackButton": "跟踪",
+    "status": {
+      "inTransit": "运输中",
+      "delivered": "已交付",
+      "delayed": "延迟"
+    }
+  }
+}

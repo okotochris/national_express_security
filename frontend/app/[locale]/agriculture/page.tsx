@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Header from "../component/header";
-import Footer from "../component/footer";
+import Header from "../../component/header";
+import Footer from "../../component/footer";
 
 export default function AgriculturePage() {
   return (

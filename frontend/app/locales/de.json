@@ -1,0 +1,37 @@
+{
+  "Header": {
+    "title": "Logistik",
+    "services": "Dienste",
+    "tracking": "Tracking",
+    "contact": "Verkauf kontaktieren",
+    "searchPlaceholder": "Sendungen, Dokumente suchen...",
+    "searchButton": "Suchen"
+  },
+  "Common": {
+    "loading": "Laden...",
+    "error": "Etwas ist schiefgelaufen",
+    "footer": "© 2025 National Express Security. Alle Rechte vorbehalten."
+  },
+  "HomePage": {
+    "title": "Sichere Logistiklösungen",
+    "subtitle": "Schneller, zuverlässiger Versand mit höchster Sicherheit.",
+    "cta": "Loslegen"
+  },
+  "ServicesPage": {
+    "title": "Unsere Dienste",
+    "description": "Von Luftfracht bis sichere Lagerung.",
+    "airFreight": "Luftfracht",
+    "seaFreight": "Seefracht",
+    "warehousing": "Lagerung"
+  },
+  "TrackingPage": {
+    "title": "Ihre Sendung verfolgen",
+    "inputLabel": "Tracking-Nummer eingeben",
+    "trackButton": "Verfolgen",
+    "status": {
+      "inTransit": "Unterwegs",
+      "delivered": "Geliefert",
+      "delayed": "Verspätet"
+    }
+  }
+}

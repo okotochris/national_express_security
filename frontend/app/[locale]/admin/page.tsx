@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, FormEvent } from "react";
-import Header from "../component/header";
+import Header from "../../component/header";
 import { useRouter } from "next/navigation";
 import {Trash2 } from "lucide-react";
 const server = process.env.NEXT_PUBLIC_API_URL

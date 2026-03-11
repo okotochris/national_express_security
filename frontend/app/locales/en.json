@@ -1,0 +1,37 @@
+{
+  "Header": {
+    "title": "Logistics",
+    "services": "Services",
+    "tracking": "Tracking",
+    "contact": "Contact Sales",
+    "searchPlaceholder": "Search shipments, docs...",
+    "searchButton": "Search"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "footer": "© 2025 National Express Security. All rights reserved."
+  },
+  "HomePage": {
+    "title": "Secure Logistics Solutions",
+    "subtitle": "Fast, reliable shipping with top-tier security.",
+    "cta": "Get Started"
+  },
+  "ServicesPage": {
+    "title": "Our Services",
+    "description": "From air freight to secure warehousing.",
+    "airFreight": "Air Freight",
+    "seaFreight": "Sea Freight",
+    "warehousing": "Warehousing"
+  },
+  "TrackingPage": {
+    "title": "Track Your Shipment",
+    "inputLabel": "Enter Tracking Number",
+    "trackButton": "Track",
+    "status": {
+      "inTransit": "In Transit",
+      "delivered": "Delivered",
+      "delayed": "Delayed"
+    }
+  }
+}
