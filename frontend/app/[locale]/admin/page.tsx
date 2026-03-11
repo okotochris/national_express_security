@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState, FormEvent } from "react";
-import Header from "../../component/header";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
+import Header from "../component/header";
 const server = process.env.NEXT_PUBLIC_API_URL
 
 // Define a type for goods
