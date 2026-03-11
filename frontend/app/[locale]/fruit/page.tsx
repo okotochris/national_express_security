@@ -1,93 +1,12 @@
 "use client";
 
-<<<<<<< HEAD
-=======
-import { useState, useEffect } from "react";
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "../component/header";
 import Footer from "../component/footer";
-<<<<<<< HEAD
+import Link from "next/link";
 
 export default function FruitPage() {
-=======
-import { useParams } from "next/navigation";
-
-type Feature = {
-  title: string;
-  desc: string;
-};
-
-type Content = {
-  heroTitle: string;
-  heroSubtitle: string;
-  aboutTitle: string;
-  aboutParagraphs: string[];
-  capabilitiesTitle: string;
-  capabilitiesSubtitle: string;
-  features: Feature[];
-  ctaTitle: string;
-  ctaSubtitle: string;
-};
-
-const defaultContent: Content = {
-  heroTitle: "Fruit Logistics",
-  heroSubtitle:
-    "Keeping fruits fresh and nutritious from farm to international markets through precise cold-chain logistics.",
-  aboutTitle: "Keeping Fruits Fresh Every Step of the Way",
-  aboutParagraphs: [
-    "Our cold-chain logistics ensure your fruits arrive in perfect condition — whether they are destined for supermarkets, wholesalers, or international markets. Using temperature-controlled vehicles and humidity-managed storage, we preserve freshness, flavor, and nutritional quality.",
-    "From harvest to delivery, every step of our process is carefully monitored to prevent spoilage, reduce waste, and guarantee quality. We combine modern technology with efficient route planning to minimize transit times.",
-    "Whether you’re transporting apples, citrus fruits, pineapples, or berries — we’ve got the expertise and infrastructure to move your produce safely and efficiently."
-  ],
-  capabilitiesTitle: "Our Expertise in Fruit Logistics",
-  capabilitiesSubtitle:
-    "We use advanced cold-chain technology and smart logistics solutions to deliver fruits fresh, on time, and safely across domestic and international markets.",
-  features: [
-    { title: "Temperature-Controlled Vehicles", desc: "Maintain ideal temperatures from loading to delivery for all fruit varieties." },
-    { title: "Real-Time Monitoring", desc: "Track temperature, humidity, and location in real-time for full transparency." },
-    { title: "Rapid Transit Routes", desc: "Optimized logistics routes to ensure shortest travel times and reduce spoilage." },
-    { title: "Export Compliance", desc: "We handle all export and health certifications for international deliveries." },
-    { title: "Custom Packaging", desc: "Specialized fruit crates and cushioning materials to prevent bruising or damage." },
-    { title: "24/7 Customer Support", desc: "Our logistics experts are available around the clock to support your shipments." }
-  ],
-  ctaTitle: "Let’s Move Freshness Forward",
-  ctaSubtitle: "Partner with us for reliable cold-chain logistics that keep your fruits as fresh as the moment they’re picked."
-};
-
-export default function FruitPage() {
-  const params = useParams();
-  const [content, setContent] = useState<Content>(defaultContent);
-
- useEffect(() => {
-  async function translate() {
-    try {
-      const rawLocale = params.locale;
-      const locale = Array.isArray(rawLocale) ? rawLocale[0] : rawLocale || "EN"; // ensure string
-
-      const res = await fetch("/api/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: defaultContent, targetLocale: locale.toUpperCase() })
-      });
-
-      if (!res.ok) {
-        console.error("Translation failed:", res.statusText);
-        return;
-      }
-
-      const translatedContent = await res.json();
-      setContent(translatedContent);
-    } catch (err) {
-      console.error("Translation API error:", err);
-    }
-  }
-
-  translate();
-}, [params.locale]);
-
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   return (
     <>
       <Header />
@@ -96,11 +15,7 @@ export default function FruitPage() {
       <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <Image
           src="/fruit.jpg"
-<<<<<<< HEAD
           alt="Fruit logistics"
-=======
-          alt={content.heroTitle}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           fill
           className="object-cover"
           priority
@@ -112,17 +27,10 @@ export default function FruitPage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-extrabold text-white mb-4"
           >
-<<<<<<< HEAD
             Fruit Logistics
           </motion.h1>
           <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
             Keeping fruits fresh and nutritious from farm to international markets through precise cold-chain logistics.
-=======
-            {content.heroTitle}
-          </motion.h1>
-          <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
-            {content.heroSubtitle}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
       </section>
@@ -150,7 +58,6 @@ export default function FruitPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-<<<<<<< HEAD
               Keeping Fruits Fresh Every Step of the Way
             </h2>
             <p className="text-slate-700 leading-relaxed mb-4">
@@ -167,15 +74,6 @@ export default function FruitPage() {
               Whether you’re transporting apples, citrus fruits, pineapples, or berries — we’ve got the expertise and
               infrastructure to move your produce safely and efficiently.
             </p>
-=======
-              {content.aboutTitle}
-            </h2>
-            {content.aboutParagraphs?.map((p, i) => (
-              <p key={i} className="text-slate-700 leading-relaxed mb-4">
-                {p}
-              </p>
-            ))}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </motion.div>
         </div>
       </section>
@@ -184,23 +82,15 @@ export default function FruitPage() {
       <section className="py-20 bg-white px-6">
         <div className="max-w-6xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
-<<<<<<< HEAD
             Our Expertise in Fruit Logistics
           </h2>
           <p className="text-slate-600 max-w-3xl mx-auto">
             We use advanced cold-chain technology and smart logistics solutions to deliver fruits fresh, on time,
             and safely across domestic and international markets.
-=======
-            {content.capabilitiesTitle}
-          </h2>
-          <p className="text-slate-600 max-w-3xl mx-auto">
-            {content.capabilitiesSubtitle}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-<<<<<<< HEAD
           {[
             {
               title: "Temperature-Controlled Vehicles",
@@ -227,9 +117,6 @@ export default function FruitPage() {
               desc: "Our logistics experts are available around the clock to support your shipments.",
             },
           ].map((item, i) => (
-=======
-          {content.features?.map((item, i) => (
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -248,21 +135,16 @@ export default function FruitPage() {
 
       {/* CTA Section */}
       <section className="bg-emerald-600 py-16 text-center text-white">
-<<<<<<< HEAD
         <h2 className="text-3xl font-bold mb-4">Let’s Move Freshness Forward</h2>
         <p className="max-w-2xl mx-auto mb-6 text-slate-100">
           Partner with us for reliable cold-chain logistics that keep your fruits as fresh as the moment they’re picked.
         </p>
-=======
-        <h2 className="text-3xl font-bold mb-4">{content.ctaTitle}</h2>
-        <p className="max-w-2xl mx-auto mb-6 text-slate-100">{content.ctaSubtitle}</p>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
-        <a
+        <Link
           href="/contact"
           className="bg-white text-emerald-700 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition"
         >
           Contact Us
-        </a>
+        </Link>
       </section>
 
       <Footer />
