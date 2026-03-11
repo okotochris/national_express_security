@@ -1,17 +1,12 @@
 "use client";
 
-<<<<<<< HEAD
-=======
 import { useParams } from "next/navigation";
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "../component/header";
 import Footer from "../component/footer";
+import Link from "next/link";
 
-<<<<<<< HEAD
-export default function PulpPaperForestryPage() {
-=======
 type Translations = {
   [key: string]: {
     heroTitle: string;
@@ -90,7 +85,6 @@ export default function PulpPaperForestryPage() {
   const locale = typeof params.locale === "string" ? params.locale : "en";
   const t = translations[locale] || translations.en;
 
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   return (
     <>
       <Header />
@@ -99,11 +93,7 @@ export default function PulpPaperForestryPage() {
       <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <Image
           src="/pulp.jpg"
-<<<<<<< HEAD
-          alt="Pulp, Paper, and Forestry Logistics"
-=======
           alt={t.heroTitle}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           fill
           className="object-cover"
           priority
@@ -115,17 +105,9 @@ export default function PulpPaperForestryPage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-extrabold text-white mb-4"
           >
-<<<<<<< HEAD
-            Pulp, Paper & Forestry Logistics
-          </motion.h1>
-          <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
-            Sustainable, efficient, and secure transport of forestry and paper products worldwide.
-          </p>
-=======
             {t.heroTitle}
           </motion.h1>
           <p className="text-slate-200 text-lg md:text-xl max-w-2xl">{t.heroDesc}</p>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
         </div>
       </section>
 
@@ -139,11 +121,7 @@ export default function PulpPaperForestryPage() {
           >
             <Image
               src="/pulp1.jpg"
-<<<<<<< HEAD
-              alt="Forestry logistics transport"
-=======
               alt={t.aboutTitle}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
               width={600}
               height={400}
               className="rounded-2xl shadow-lg object-cover"
@@ -155,30 +133,10 @@ export default function PulpPaperForestryPage() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-<<<<<<< HEAD
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-              Connecting Forests to Global Markets
-            </h2>
-            <p className="text-slate-700 leading-relaxed mb-4">
-              Our logistics solutions cover the full supply chain of forestry and paper-based products — 
-              from raw timber and pulp to finished paper rolls. We provide dependable, efficient, and 
-              environmentally conscious logistics support for industries across the globe.
-            </p>
-            <p className="text-slate-700 leading-relaxed mb-4">
-              With our expertise, we optimize transportation routes to minimize carbon impact, ensuring 
-              sustainability in every shipment. Whether your cargo is heavy-duty logs or delicate packaging 
-              paper, we ensure its safe delivery with precision tracking.
-            </p>
-            <p className="text-slate-700 leading-relaxed">
-              Our partnerships with global carriers and warehouses enable flexible and cost-effective 
-              transport for forestry businesses, paper mills, and international distributors.
-            </p>
-=======
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">{t.aboutTitle}</h2>
             <p className="text-slate-700 leading-relaxed mb-4">{t.aboutText1}</p>
             <p className="text-slate-700 leading-relaxed mb-4">{t.aboutText2}</p>
             <p className="text-slate-700 leading-relaxed">{t.aboutText3}</p>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </motion.div>
         </div>
       </section>
@@ -186,51 +144,12 @@ export default function PulpPaperForestryPage() {
       {/* Expertise Section */}
       <section className="py-20 bg-white px-6">
         <div className="max-w-6xl mx-auto text-center mb-12">
-<<<<<<< HEAD
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
-            Our Pulp & Forestry Logistics Expertise
-          </h2>
-          <p className="text-slate-600 max-w-3xl mx-auto">
-            We handle the logistics of forestry and paper industries with precision, 
-            safety, and sustainability at the core of every process.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {[
-            {
-              title: "Bulk Timber Transport",
-              desc: "Reliable heavy-duty logistics for logs, wood chips, and raw forest products.",
-            },
-            {
-              title: "Paper & Pulp Shipping",
-              desc: "Efficient transport for pulp, paper rolls, and finished paper goods.",
-            },
-            {
-              title: "Sustainable Logistics",
-              desc: "Eco-friendly practices to reduce emissions and protect the environment.",
-            },
-            {
-              title: "Global Supply Chain",
-              desc: "Strong partnerships to ensure timely delivery across continents.",
-            },
-            {
-              title: "Secure Warehousing",
-              desc: "Safe, weather-protected storage for forestry and paper materials.",
-            },
-            {
-              title: "Real-Time Monitoring",
-              desc: "Track your shipments and logistics data with advanced digital systems.",
-            },
-          ].map((item, i) => (
-=======
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">{t.expertiseTitle}</h2>
           <p className="text-slate-600 max-w-3xl mx-auto">{t.expertiseDesc}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {t.expertise.map((item, i) => (
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -238,13 +157,7 @@ export default function PulpPaperForestryPage() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="p-6 bg-emerald-50 rounded-2xl shadow-md hover:shadow-xl transition"
             >
-<<<<<<< HEAD
-              <h4 className="text-xl font-semibold text-emerald-700 mb-2">
-                {item.title}
-              </h4>
-=======
               <h4 className="text-xl font-semibold text-emerald-700 mb-2">{item.title}</h4>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
               <p className="text-slate-600 text-sm">{item.desc}</p>
             </motion.div>
           ))}
@@ -253,28 +166,14 @@ export default function PulpPaperForestryPage() {
 
       {/* CTA Section */}
       <section className="bg-emerald-600 py-16 text-center text-white">
-<<<<<<< HEAD
-        <h2 className="text-3xl font-bold mb-4">
-          Building a Sustainable Future for Forestry Logistics
-        </h2>
-        <p className="max-w-2xl mx-auto mb-6 text-slate-100">
-          Partner with us for reliable, sustainable, and efficient pulp, paper, 
-          and forestry product transportation solutions.
-        </p>
-=======
         <h2 className="text-3xl font-bold mb-4">{t.ctaTitle}</h2>
         <p className="max-w-2xl mx-auto mb-6 text-slate-100">{t.ctaDesc}</p>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
-        <a
+        <Link
           href="/contact"
           className="bg-white text-emerald-700 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition"
         >
-<<<<<<< HEAD
-          Contact Us
-=======
           {t.ctaBtn}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
-        </a>
+        </Link>
       </section>
 
       <Footer />

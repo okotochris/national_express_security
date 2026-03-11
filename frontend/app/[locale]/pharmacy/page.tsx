@@ -1,17 +1,12 @@
 "use client";
 
-<<<<<<< HEAD
-=======
-import { useParams } from "next/navigation";
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "../component/header";
 import Footer from "../component/footer";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
-<<<<<<< HEAD
-export default function PharmaceuticalPage() {
-=======
 type Translations = {
   [key: string]: {
     heroTitle: string;
@@ -88,7 +83,6 @@ export default function PharmaceuticalPage() {
   const locale = typeof params.locale === "string" ? params.locale : "en";
   const t = translations[locale] || translations.en;
 
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   return (
     <>
       <Header />
@@ -97,11 +91,7 @@ export default function PharmaceuticalPage() {
       <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <Image
           src="/pharma.jpg"
-<<<<<<< HEAD
-          alt="Pharmaceutical logistics"
-=======
           alt={t.heroTitle}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           fill
           className="object-cover"
           priority
@@ -113,17 +103,9 @@ export default function PharmaceuticalPage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-extrabold text-white mb-4"
           >
-<<<<<<< HEAD
-            Pharmaceutical Logistics
-          </motion.h1>
-          <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
-            Secure, compliant, and temperature-controlled logistics for medical and pharmaceutical products.
-          </p>
-=======
             {t.heroTitle}
           </motion.h1>
           <p className="text-slate-200 text-lg md:text-xl max-w-2xl">{t.heroDesc}</p>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
         </div>
       </section>
 
@@ -137,11 +119,7 @@ export default function PharmaceuticalPage() {
           >
             <Image
               src="/pharmacy.jpg"
-<<<<<<< HEAD
-              alt="Pharmaceutical transport"
-=======
               alt={t.aboutTitle}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
               width={600}
               height={400}
               className="rounded-2xl shadow-lg object-cover"
@@ -153,29 +131,10 @@ export default function PharmaceuticalPage() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-<<<<<<< HEAD
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-              Precision and Safety in Every Shipment
-            </h2>
-            <p className="text-slate-700 leading-relaxed mb-4">
-              We specialize in the safe, compliant, and efficient transportation of pharmaceutical and healthcare
-              products. From vaccines to medical devices, our systems ensure each item is handled with precision
-              and stored under optimal conditions.
-            </p>
-            <p className="text-slate-700 leading-relaxed mb-4">
-              Our cold-chain solutions maintain critical temperature ranges and humidity levels throughout transit.
-              Each step of the journey is tracked and verified to meet international healthcare logistics standards.
-            </p>
-            <p className="text-slate-700 leading-relaxed">
-              With our secure vehicles, GPS monitoring, and trained personnel, your pharmaceutical goods arrive safely,
-              on time, and in full regulatory compliance.
-            </p>
-=======
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">{t.aboutTitle}</h2>
             <p className="text-slate-700 leading-relaxed mb-4">{t.aboutText1}</p>
             <p className="text-slate-700 leading-relaxed mb-4">{t.aboutText2}</p>
             <p className="text-slate-700 leading-relaxed">{t.aboutText3}</p>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </motion.div>
         </div>
       </section>
@@ -183,50 +142,12 @@ export default function PharmaceuticalPage() {
       {/* Capabilities Section */}
       <section className="py-20 bg-white px-6">
         <div className="max-w-6xl mx-auto text-center mb-12">
-<<<<<<< HEAD
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
-            Our Pharmaceutical Logistics Expertise
-          </h2>
-          <p className="text-slate-600 max-w-3xl mx-auto">
-            We combine safety, speed, and compliance to ensure the integrity of pharmaceutical and healthcare shipments across borders.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {[
-            {
-              title: "Cold Chain Management",
-              desc: "Temperature-controlled transport for vaccines, biologics, and other sensitive items.",
-            },
-            {
-              title: "Regulatory Compliance",
-              desc: "Fully compliant with WHO, GDP, and local pharmaceutical handling standards.",
-            },
-            {
-              title: "Secure Handling",
-              desc: "Specialized packaging, trained handlers, and vehicle security systems.",
-            },
-            {
-              title: "Real-Time Tracking",
-              desc: "Monitor every shipment’s temperature, route, and delivery status instantly.",
-            },
-            {
-              title: "Custom Logistics Solutions",
-              desc: "Tailored logistics for pharmaceutical manufacturers, hospitals, and distributors.",
-            },
-            {
-              title: "Rapid Response",
-              desc: "24/7 availability for emergency medical deliveries and critical supply chain needs.",
-            },
-          ].map((item, i) => (
-=======
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">{t.capabilitiesTitle}</h2>
           <p className="text-slate-600 max-w-3xl mx-auto">{t.capabilitiesDesc}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {t.capabilities.map((item, i) => (
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -234,13 +155,7 @@ export default function PharmaceuticalPage() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="p-6 bg-blue-50 rounded-2xl shadow-md hover:shadow-xl transition"
             >
-<<<<<<< HEAD
-              <h4 className="text-xl font-semibold text-emerald-700 mb-2">
-                {item.title}
-              </h4>
-=======
               <h4 className="text-xl font-semibold text-emerald-700 mb-2">{item.title}</h4>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
               <p className="text-slate-600 text-sm">{item.desc}</p>
             </motion.div>
           ))}
@@ -249,27 +164,14 @@ export default function PharmaceuticalPage() {
 
       {/* CTA Section */}
       <section className="bg-emerald-600 py-16 text-center text-white">
-<<<<<<< HEAD
-        <h2 className="text-3xl font-bold mb-4">
-          Protecting Health Through Reliable Logistics
-        </h2>
-        <p className="max-w-2xl mx-auto mb-6 text-slate-100">
-          Partner with us for pharmaceutical transportation solutions that meet global safety and compliance standards.
-        </p>
-=======
         <h2 className="text-3xl font-bold mb-4">{t.ctaTitle}</h2>
         <p className="max-w-2xl mx-auto mb-6 text-slate-100">{t.ctaDesc}</p>
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
-        <a
+        <Link
           href="/contact"
           className="bg-white text-emerald-700 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition"
         >
-<<<<<<< HEAD
-          Contact Us
-=======
           {t.ctaBtn}
->>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
-        </a>
+        </Link>
       </section>
 
       <Footer />
