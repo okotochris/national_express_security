@@ -3,9 +3,9 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams, usePathname } from "next/navigation";
 
-const categories = [
+const baseCategories = [
   {
     title: "Fruit",
     content:
@@ -79,71 +79,122 @@ const categories = [
 ];
 
 export default function IndustryCarousel() {
+  const router = useRouter();
+  const params = useParams();
+  const localeParam = params?.locale;
+  const locale = Array.isArray(localeParam) ? localeParam[0] : localeParam || "en";
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
   const [isHovered, setIsHovered] = useState(false);
-  const router = useRouter();
-  const autoPlayInterval = 5000; // 5 seconds
+  const [translatedCategories, setTranslatedCategories] = useState(baseCategories);
+  const [translatedStatic, setTranslatedStatic] = useState({
+    heading: "Industries We Serve",
+    description1:
+      "At NES, we pride ourselves on being a global container shipping company that delivers tailored solutions designed to meet the specific needs of each of our customers. Regardless of your cargo type or destination, we offer versatile logistics services that cover air, land, and sea.",
+    description2:
+      "With our extensive fleet capacity, global port coverage, and advanced tracking systems, NES is the trusted logistics partner for companies around the world. We ensure professional, efficient, and reliable shipping tailored to the specific requirements of your business.",
+    readMore: "Read More →",
+  });
 
-  // Adjust itemsPerView based on screen size
+  const autoPlayInterval = 5000;
+
+  // Adjust itemsPerView based on screen width
   useEffect(() => {
-    const updateItems = () => {
-      if (window.innerWidth < 768) {
-        setItemsPerView(1);
-      } else {
-        setItemsPerView(3);
-      }
-    };
+    const updateItems = () => setItemsPerView(window.innerWidth < 768 ? 1 : 3);
     updateItems();
     window.addEventListener("resize", updateItems);
     return () => window.removeEventListener("resize", updateItems);
   }, []);
 
-  // Scroll functions wrapped with useCallback for stable references
+  // Translate content dynamically
+  useEffect(() => {
+    async function translateIndustry() {
+      if (locale === "en") {
+        setTranslatedCategories(baseCategories);
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/translate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            content: {
+              categories: baseCategories.map((c) => ({
+                title: c.title,
+                content: c.content,
+              })),
+              static: translatedStatic,
+            },
+            targetLocale: locale,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Failed to translate");
+
+        const data = await res.json();
+
+        const mergedCategories = baseCategories.map((orig, i) => ({
+          ...orig,
+          title: data.categories?.[i]?.title || orig.title,
+          content: data.categories?.[i]?.content || orig.content,
+        }));
+
+        setTranslatedCategories(mergedCategories);
+        setTranslatedStatic({
+          heading: data.static?.heading || translatedStatic.heading,
+          description1: data.static?.description1 || translatedStatic.description1,
+          description2: data.static?.description2 || translatedStatic.description2,
+          readMore: data.static?.readMore || translatedStatic.readMore,
+        });
+      } catch (error) {
+        console.error("Industry translation error:", error);
+        setTranslatedCategories(baseCategories);
+      }
+    }
+
+    translateIndustry();
+  }, [locale]);
+
+  // Scroll handlers
   const scrollLeft = useCallback(() => {
     setCurrentIndex((prev) =>
-      prev === 0 ? categories.length - itemsPerView : prev - 1
+      prev === 0 ? translatedCategories.length - itemsPerView : prev - 1
     );
-  }, [itemsPerView]);
+  }, [itemsPerView, translatedCategories.length]);
 
   const scrollRight = useCallback(() => {
     setCurrentIndex((prev) =>
-      prev >= categories.length - itemsPerView ? 0 : prev + 1
+      prev >= translatedCategories.length - itemsPerView ? 0 : prev + 1
     );
-  }, [itemsPerView]);
+  }, [itemsPerView, translatedCategories.length]);
 
-  // Auto-play functionality with hover pause
+  // Auto-play with hover pause
   useEffect(() => {
     if (isHovered) return;
     const interval = setInterval(scrollRight, autoPlayInterval);
     return () => clearInterval(interval);
   }, [scrollRight, autoPlayInterval, isHovered]);
 
-  const totalSlides = categories.length - itemsPerView + 1;
-
+  const totalSlides = translatedCategories.length - itemsPerView + 1;
+        const localeLink = (path: string) => `/${locale}${path}`;
+    function navigate(path:string){
+    
+      router.push(localeLink(path))
+    }
   return (
     <section className="relative max-w-full mx-auto px-4 sm:px-6 md:px-8 py-16">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
-        Industries We Serve
+        {translatedStatic.heading}
       </h2>
 
       <div className="my-5 text-center max-w-4xl mx-auto">
-        <p className="text-slate-600 mt-3">
-          At NES, we pride ourselves on being a global container shipping
-          company that delivers tailored solutions designed to meet the specific
-          needs of each of our customers. Regardless of your cargo type or
-          destination, we offer versatile logistics services that cover air,
-          land, and sea.
-        </p>
-        <p className="text-slate-600 mt-3">
-          With our extensive fleet capacity, global port coverage, and advanced
-          tracking systems, NES is the trusted logistics partner for companies
-          around the world. We ensure professional, efficient, and reliable
-          shipping tailored to the specific requirements of your business.
-        </p>
+        <p className="text-slate-600 mt-3">{translatedStatic.description1}</p>
+        <p className="text-slate-600 mt-3">{translatedStatic.description2}</p>
       </div>
 
-      {/* Left Button */}
+      {/* Navigation Buttons */}
       <button
         onClick={scrollLeft}
         className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition opacity-80 hover:opacity-100"
@@ -151,7 +202,6 @@ export default function IndustryCarousel() {
         <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 text-slate-800" />
       </button>
 
-      {/* Right Button */}
       <button
         onClick={scrollRight}
         className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 sm:p-3 rounded-full shadow-lg z-10 transition opacity-80 hover:opacity-100"
@@ -171,7 +221,7 @@ export default function IndustryCarousel() {
             transform: `translateX(-${(currentIndex * 100) / itemsPerView}%)`,
           }}
         >
-          {categories.map((item, index) => (
+          {translatedCategories.map((item, index) => (
             <div
               key={index}
               className={`flex-shrink-0 p-3 ${
@@ -196,10 +246,10 @@ export default function IndustryCarousel() {
                     {item.content}
                   </p>
                   <button
-                    onClick={() => router.push(item.url)}
+                    onClick={() => navigate(item.url)}
                     className="mt-auto text-blue-600 font-semibold hover:underline text-sm md:text-base"
                   >
-                    Read More →
+                    {translatedStatic.readMore}
                   </button>
                 </div>
               </div>

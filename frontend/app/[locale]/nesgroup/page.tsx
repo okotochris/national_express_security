@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 import {ShieldCheck, Clock, Users, Globe, Award, Building } from "lucide-react";
 import Header from "../component/header";
 import Footer from "../component/footer"; 
@@ -12,10 +13,92 @@ export default function NESGroupPage() {
 
   useEffect(() => {
     // Simulate loading for hero animation or data fetch
+=======
+import { ShieldCheck, Clock, Users, Globe, Award, Building } from "lucide-react";
+import Header from "../component/header";
+import Footer from "../component/footer";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+
+export default function NESGroupPage() {
+  const params = useParams();
+  const [loading, setLoading] = useState(true);
+
+  // Multilingual content
+  const content = {
+    en: {
+      heroTitle: "Welcome to NES Group",
+      heroDesc: "Pioneering Global Logistics Excellence Since 1998",
+      heroText:
+        "NES Group is the umbrella organization powering innovative shipping, logistics, and supply chain solutions worldwide. From our roots in secure freight transport to leading sustainable practices, we connect businesses to opportunities across continents.",
+      stats: [
+        { label: "Years in Business", value: "25+" },
+        { label: "Global Ports", value: "500+" },
+        { label: "Satisfied Clients", value: "10,000+" },
+        { label: "Containers Shipped", value: "1M+" }
+      ],
+      milestones: [
+        { year: "1998", event: "Founded as a local shipping provider in London." },
+        { year: "2005", event: "Expanded to international sea freight operations." },
+        { year: "2015", event: "Launched air and land logistics divisions." },
+        { year: "2020", event: "Achieved carbon-neutral shipping milestone." },
+        { year: "2025", event: "Integrated AI-driven supply chain optimization." }
+      ],
+      coreValues: [
+        { title: "Global Reach", desc: "Connecting every corner of the world with seamless logistics." },
+        { title: "Security First", desc: "Uncompromising protection for your valuable cargo." },
+        { title: "Reliability", desc: "On-time delivery, every time, without exceptions." },
+        { title: "Customer-Centric", desc: "Tailored solutions that put your needs at the forefront." }
+      ],
+      ctaTitle: "Ready to Partner with NES Group?",
+      ctaDesc:
+        "Join thousands of businesses trusting us for their logistics journey. Let's discuss how we can elevate your operations.",
+      ctaButtons: ["Get a Quote", "Contact Us"]
+    },
+    fr: {
+      heroTitle: "Bienvenue chez NES Group",
+      heroDesc: "Pionnier de l'excellence logistique mondiale depuis 1998",
+      heroText:
+        "NES Group est l'organisation qui alimente des solutions innovantes en matière d'expédition, de logistique et de chaîne d'approvisionnement dans le monde entier. De nos racines dans le transport sécurisé à nos pratiques durables, nous connectons les entreprises aux opportunités à travers les continents.",
+      stats: [
+        { label: "Années d'activité", value: "25+" },
+        { label: "Ports mondiaux", value: "500+" },
+        { label: "Clients satisfaits", value: "10 000+" },
+        { label: "Conteneurs expédiés", value: "1M+" }
+      ],
+      milestones: [
+        { year: "1998", event: "Fondé comme fournisseur local de transport à Londres." },
+        { year: "2005", event: "Expansion aux opérations de fret maritime international." },
+        { year: "2015", event: "Lancement des divisions logistiques aériennes et terrestres." },
+        { year: "2020", event: "Atteinte de la neutralité carbone pour l'expédition." },
+        { year: "2025", event: "Intégration de l'optimisation de la chaîne d'approvisionnement par IA." }
+      ],
+      coreValues: [
+        { title: "Portée mondiale", desc: "Connecter chaque coin du monde avec une logistique transparente." },
+        { title: "Sécurité avant tout", desc: "Protection intransigeante de vos cargaisons précieuses." },
+        { title: "Fiabilité", desc: "Livraison à temps, à chaque fois, sans exception." },
+        { title: "Orientation client", desc: "Des solutions personnalisées qui placent vos besoins au premier plan." }
+      ],
+      ctaTitle: "Prêt à collaborer avec NES Group ?",
+      ctaDesc:
+        "Rejoignez des milliers d'entreprises qui nous font confiance pour leur parcours logistique. Discutons de la manière dont nous pouvons améliorer vos opérations.",
+      ctaButtons: ["Obtenir un devis", "Contactez-nous"]
+    },
+    // Add more languages here (es, de, etc.)
+  };
+
+  // TypeScript: derive locale type dynamically
+  type Locale = keyof typeof content;
+  const localeParam = params?.locale as string;
+  const locale: Locale = localeParam && localeParam in content ? (localeParam as Locale) : "en";
+
+  useEffect(() => {
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
+<<<<<<< HEAD
   const stats = [
     { label: "Years in Business", value: "25+" },
     { label: "Global Ports", value: "500+" },
@@ -31,6 +114,8 @@ export default function NESGroupPage() {
     { year: "2025", event: "Integrated AI-driven supply chain optimization." }
   ];
 
+=======
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-sky-50">
@@ -42,6 +127,11 @@ export default function NESGroupPage() {
     );
   }
 
+<<<<<<< HEAD
+=======
+  const c = content[locale]; // ✅ Safe access
+
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   return (
     <>
       <Header />
@@ -56,6 +146,7 @@ export default function NESGroupPage() {
             className="relative z-10 max-w-4xl"
           >
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-white mb-6">
+<<<<<<< HEAD
               Welcome to <span className="text-emerald-400">NES Group</span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-200 mb-8 leading-relaxed">
@@ -65,6 +156,14 @@ export default function NESGroupPage() {
               NES Group is the umbrella organization powering innovative shipping, logistics, and supply chain solutions worldwide. 
               From our roots in secure freight transport to leading sustainable practices, we connect businesses to opportunities across continents.
             </p>
+=======
+              {c.heroTitle}
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-200 mb-8 leading-relaxed">
+              {c.heroDesc}
+            </p>
+            <p className="text-lg text-slate-300 max-w-2xl">{c.heroText}</p>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </motion.div>
         </div>
       </section>
@@ -73,7 +172,11 @@ export default function NESGroupPage() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<<<<<<< HEAD
             {stats.map((stat, index) => (
+=======
+            {c.stats.map((stat, index) => (
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -98,6 +201,7 @@ export default function NESGroupPage() {
               transition={{ duration: 0.6 }}
               className="order-2 lg:order-1"
             >
+<<<<<<< HEAD
               <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
                 Our Journey
               </h2>
@@ -106,18 +210,30 @@ export default function NESGroupPage() {
                 into a global powerhouse in multimodal transportation. Today, we serve diverse industries with cutting-edge 
                 technology, unwavering commitment to sustainability, and a team of experts dedicated to your success.
               </p>
+=======
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">{c.heroTitle}</h2>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed">{c.heroText}</p>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
               <div className="space-y-4">
                 <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
                   <Building className="w-8 h-8 text-emerald-600" />
                   <div>
+<<<<<<< HEAD
                     <h4 className="font-semibold text-slate-800">Headquartered in London</h4>
+=======
+                    <h4 className="font-semibold text-slate-800">{c.milestones[0].event}</h4>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
                     <p className="text-sm text-slate-600">Strategic hub for European operations.</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
                   <Award className="w-8 h-8 text-emerald-600" />
                   <div>
+<<<<<<< HEAD
                     <h4 className="font-semibold text-slate-800">Award-Winning Service</h4>
+=======
+                    <h4 className="font-semibold text-slate-800">{c.milestones[1].event}</h4>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
                     <p className="text-sm text-slate-600">Recognized for innovation and reliability globally.</p>
                   </div>
                 </div>
@@ -131,13 +247,21 @@ export default function NESGroupPage() {
             >
               <div className="relative h-96 bg-gray-300 rounded-2xl overflow-hidden">
                 <Image
+<<<<<<< HEAD
                   src="/group-timeline.jpg" // Placeholder for timeline graphic
                   alt="NES Group Timeline"
+=======
+                  src="/group-timeline.jpg"
+                  alt="NES Group Timeline"
+                  width={600}
+                  height={400}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
                   className="w-full h-full object-cover"
                 />
               </div>
             </motion.div>
           </div>
+<<<<<<< HEAD
 
           {/* Milestones Timeline */}
           <div className="mt-16">
@@ -167,12 +291,15 @@ export default function NESGroupPage() {
               </div>
             </div>
           </div>
+=======
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
         </div>
       </section>
 
       {/* Core Values Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto text-center">
+<<<<<<< HEAD
           <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-12">
             Our Core Values
           </h2>
@@ -217,6 +344,26 @@ export default function NESGroupPage() {
               <h3 className="text-xl font-semibold text-slate-800 mb-2">Customer-Centric</h3>
               <p className="text-slate-600">Tailored solutions that put your needs at the forefront.</p>
             </motion.div>
+=======
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-12">Our Core Values</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {c.coreValues.map((value, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="p-6"
+              >
+                {index === 0 && <Globe className="w-12 h-12 text-emerald-600 mx-auto mb-4" />}
+                {index === 1 && <ShieldCheck className="w-12 h-12 text-emerald-600 mx-auto mb-4" />}
+                {index === 2 && <Clock className="w-12 h-12 text-emerald-600 mx-auto mb-4" />}
+                {index === 3 && <Users className="w-12 h-12 text-emerald-600 mx-auto mb-4" />}
+                <h3 className="text-xl font-semibold text-slate-800 mb-2">{value.title}</h3>
+                <p className="text-slate-600">{value.desc}</p>
+              </motion.div>
+            ))}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </div>
         </div>
       </section>
@@ -224,6 +371,7 @@ export default function NESGroupPage() {
       {/* CTA Section */}
       <section className="py-20 px-6 bg-gradient-to-br from-emerald-600 to-emerald-700 text-white">
         <div className="max-w-4xl mx-auto text-center">
+<<<<<<< HEAD
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Ready to Partner with NES Group?
           </h2>
@@ -237,6 +385,23 @@ export default function NESGroupPage() {
             <button className="px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-emerald-600 transition">
               Contact Us
             </button>
+=======
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">{c.ctaTitle}</h2>
+          <p className="text-xl mb-8 leading-relaxed">{c.ctaDesc}</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {c.ctaButtons.map((btn, index) => (
+              <button
+                key={index}
+                className={`px-8 py-4 font-semibold rounded-lg ${
+                  index === 0
+                    ? "bg-white text-emerald-600 hover:bg-gray-100 transition"
+                    : "border-2 border-white text-white hover:bg-white hover:text-emerald-600 transition"
+                }`}
+              >
+                {btn}
+              </button>
+            ))}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </div>
         </div>
       </section>
@@ -244,4 +409,8 @@ export default function NESGroupPage() {
       <Footer />
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10

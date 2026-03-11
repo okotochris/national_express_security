@@ -1,11 +1,162 @@
 "use client";
 
+<<<<<<< HEAD
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "../../component/header";
 import Footer from "../../component/footer";
 
 export default function AgriculturePage() {
+=======
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import Header from "../component/header";
+import Footer from "../component/footer";
+import Link from "next/link";
+
+interface Capability {
+  title: string;
+  desc: string;
+}
+
+interface StaticContent {
+  hero: {
+    title: string;
+    description: string;
+  };
+  about: {
+    title: string;
+    para1: string;
+    para2: string;
+    para3: string;
+  };
+  capabilities: {
+    title: string;
+    subtitle: string;
+  };
+  cta: {
+    title: string;
+    description: string;
+    button: string;
+  };
+}
+
+export default function AgriculturePage() {
+  const params = useParams();
+  const rawLocale = params?.locale;
+  const locale = Array.isArray(rawLocale) ? rawLocale[0] : rawLocale || "en";
+
+  // Static English content
+  const staticContent: StaticContent = {
+    hero: {
+      title: "Agricultural Logistics",
+      description: "Supporting the movement of grains, fertilizers, and farm equipment through efficient and sustainable supply chains.",
+    },
+    about: {
+      title: "Efficient Farm-to-Market Movement",
+      para1: "We understand the importance of time-sensitive agricultural logistics. Our tailored solutions ensure farmers, producers, and distributors can move their goods quickly, safely, and cost-effectively from farms to processing centers and markets across the country.",
+      para2: "Whether it’s grains, fertilizers, pesticides, or heavy-duty farm machinery, our logistics experts handle each shipment with precision — providing temperature-controlled options and GPS tracking for real-time monitoring.",
+      para3: "From rural farmlands to export terminals, we streamline the agricultural supply chain to reduce delays, minimize waste, and ensure sustainability at every stage.",
+    },
+    capabilities: {
+      title: "Our Capabilities in Agricultural Logistics",
+      subtitle: "We combine innovation, reliability, and speed to offer end-to-end logistics for the agricultural sector — empowering farmers, agribusinesses, and exporters.",
+    },
+    cta: {
+      title: "Partner with Us Today",
+      description: "Let’s simplify your agricultural logistics — from farm to factory to global markets. Contact us today to discuss your logistics needs.",
+      button: "Get in Touch",
+    },
+  };
+
+  const capabilities: Omit<Capability, "icon">[] = [
+    { title: "Temperature-Controlled Transport", desc: "We ensure perishable goods remain fresh with our cold-chain logistics systems." },
+    { title: "Bulk Cargo Management", desc: "Safe and efficient handling of grains, fertilizers, and other bulk goods." },
+    { title: "Machinery & Equipment Delivery", desc: "Specialized transport for tractors, harvesters, and other large machinery." },
+    { title: "Warehouse & Storage Solutions", desc: "Secure, climate-controlled warehouses for short and long-term storage." },
+    { title: "Cross-Border Transport", desc: "Streamlined customs clearance for regional and international exports." },
+    { title: "Real-Time Tracking", desc: "Advanced monitoring systems for visibility across the entire supply chain." },
+  ];
+
+  const [translatedStatic, setTranslatedStatic] = useState<StaticContent>(staticContent);
+  const [translatedCapabilities, setTranslatedCapabilities] = useState<Capability[]>(capabilities);
+
+  useEffect(() => {
+    async function translateAll() {
+      if (locale === "en") {
+        setTranslatedStatic(staticContent);
+        setTranslatedCapabilities(capabilities);
+        return;
+      }
+
+      try {
+        // Prepare payload for static content
+        const staticPayload = Object.entries(staticContent).flatMap(([sectionKey, sectionValue]) =>
+          Object.entries(sectionValue).map(([key, text]) => ({
+            key: `${sectionKey}.${key}`,
+            text,
+          }))
+        );
+
+        // Capabilities as array {title, content: desc}
+        const capabilitiesPayload = capabilities.map((c) => ({ title: c.title, content: c.desc }));
+
+        const fullPayload = { static: staticPayload, capabilities: capabilitiesPayload };
+        console.log("Sending agriculture payload:", fullPayload);
+
+        const res = await fetch("/api/translate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: fullPayload, targetLocale: locale.toUpperCase() }),
+        });
+
+        if (!res.ok) {
+          console.error("Agriculture translation failed:", res.statusText);
+          setTranslatedStatic(staticContent);
+          setTranslatedCapabilities(capabilities);
+          return;
+        }
+
+        const data = await res.json();
+        console.log("Agriculture translated:", data);
+
+        // Merge static
+        const mergedStatic: Partial<StaticContent> = {
+          hero: { title: "", description: "" },
+          about: { title: "", para1: "", para2: "", para3: "" },
+          capabilities: { title: "", subtitle: "" },
+          cta: { title: "", description: "", button: "" },
+        };
+        (data.static || staticPayload).forEach((item: any) => {
+          const [sectionKey, subKey] = item.key.split(".");
+          const section = sectionKey as keyof StaticContent;
+          if (mergedStatic[section]) {
+            (mergedStatic[section] as any)[subKey] = item.text;
+          }
+        });
+        setTranslatedStatic(mergedStatic as StaticContent);
+
+        // Merge capabilities
+        const mergedCapabilities = (data.capabilities || capabilitiesPayload).map((item: any, i: number) => ({
+          ...capabilities[i],
+          title: item.title,
+          desc: item.content,
+        }));
+        setTranslatedCapabilities(mergedCapabilities);
+
+      } catch (err) {
+        console.error("Agriculture translation error:", err);
+        setTranslatedStatic(staticContent);
+        setTranslatedCapabilities(capabilities);
+      }
+    }
+
+    translateAll();
+  }, [locale]);
+
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   return (
     <>
       <Header />
@@ -13,7 +164,11 @@ export default function AgriculturePage() {
       <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <Image
           src="/agriculture.jpg"
+<<<<<<< HEAD
           alt="Agricultural logistics"
+=======
+          alt={translatedStatic.hero.title}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           fill
           className="object-cover"
           priority
@@ -25,11 +180,18 @@ export default function AgriculturePage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-extrabold text-white mb-4"
           >
+<<<<<<< HEAD
             Agricultural Logistics
           </motion.h1>
           <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
             Supporting the movement of grains, fertilizers, and farm equipment
             through efficient and sustainable supply chains.
+=======
+            {translatedStatic.hero.title}
+          </motion.h1>
+          <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
+            {translatedStatic.hero.description}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
       </section>
@@ -44,7 +206,11 @@ export default function AgriculturePage() {
           >
             <Image
               src="/agric.jpg"
+<<<<<<< HEAD
               alt="agric"
+=======
+              alt="Agriculture logistics"
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
               width={600}
               height={400}
               className="rounded-2xl shadow-lg object-cover"
@@ -57,6 +223,7 @@ export default function AgriculturePage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
+<<<<<<< HEAD
               Efficient Farm-to-Market Movement
             </h2>
             <p className="text-slate-700 leading-relaxed mb-4">
@@ -75,6 +242,18 @@ export default function AgriculturePage() {
               From rural farmlands to export terminals, we streamline the agricultural
               supply chain to reduce delays, minimize waste, and ensure sustainability
               at every stage.
+=======
+              {translatedStatic.about.title}
+            </h2>
+            <p className="text-slate-700 leading-relaxed mb-4">
+              {translatedStatic.about.para1}
+            </p>
+            <p className="text-slate-700 leading-relaxed mb-4">
+              {translatedStatic.about.para2}
+            </p>
+            <p className="text-slate-700 leading-relaxed">
+              {translatedStatic.about.para3}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             </p>
           </motion.div>
         </div>
@@ -84,15 +263,23 @@ export default function AgriculturePage() {
       <section className="py-20 bg-white px-6">
         <div className="max-w-6xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+<<<<<<< HEAD
             Our Capabilities in Agricultural Logistics
           </h2>
           <p className="text-slate-600 max-w-3xl mx-auto">
             We combine innovation, reliability, and speed to offer end-to-end logistics
             for the agricultural sector — empowering farmers, agribusinesses, and exporters.
+=======
+            {translatedStatic.capabilities.title}
+          </h2>
+          <p className="text-slate-600 max-w-3xl mx-auto">
+            {translatedStatic.capabilities.subtitle}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+<<<<<<< HEAD
           {[
             {
               title: "Temperature-Controlled Transport",
@@ -119,6 +306,9 @@ export default function AgriculturePage() {
               desc: "Advanced monitoring systems for visibility across the entire supply chain.",
             },
           ].map((item, i) => (
+=======
+          {translatedCapabilities.map((item, i) => (
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -137,6 +327,7 @@ export default function AgriculturePage() {
 
       {/* CTA */}
       <section className="bg-emerald-600 py-16 text-center text-white">
+<<<<<<< HEAD
         <h2 className="text-3xl font-bold mb-4">Partner with Us Today</h2>
         <p className="max-w-2xl mx-auto mb-6 text-slate-100">
           Let’s simplify your agricultural logistics — from farm to factory to global markets.
@@ -148,9 +339,24 @@ export default function AgriculturePage() {
         >
           Get in Touch
         </a>
+=======
+        <h2 className="text-3xl font-bold mb-4">{translatedStatic.cta.title}</h2>
+        <p className="max-w-2xl mx-auto mb-6 text-slate-100">
+          {translatedStatic.cta.description}
+        </p>
+        <Link href="/contact">
+          <button className="bg-white text-emerald-700 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition">
+            {translatedStatic.cta.button}
+          </button>
+        </Link>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
       </section>
 
       <Footer />
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10

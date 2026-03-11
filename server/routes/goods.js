@@ -1,22 +1,51 @@
 const express = require('express')
 const db = require('../database/db.js')
+const multer = require("multer")
+const cloudinary = require("../utilities/cloudinary.js")
+
+
+
+
 const router = express.Router()
+const upload = multer({dest:"uploads/"})
 
-router.post('/api/register-goods', async (req, res)=>{
-   const {senderName, receiverName, trackingNumber, description, arriveTime, destination, status} = req.body;
-   try {
-    const query = `INSERT INTO goods (sendername, receivername, trackingnumber, description, arriveTime, 
-    destination, status) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`
-    const result = await db.query(query, [senderName,receiverName, trackingNumber, description, arriveTime, destination, status])
-    if(result.rowCount > 0){
-        res.status(200).json(result.rows)
-    }
-   } catch (err) {
-    res.status(500).json({msg:"Server error"})
-    console.log(err)
+router.post('/api/register-goods', upload.single('image'), async (req, res) => {
+  try {
+    const { senderName, receiverName, trackingNumber, description, arriveTime, destination, status } = req.body;
+    const filePath = req.file.path;
 
-   }
-})
+    // Upload to Cloudinary
+    const uploadResult = await cloudinary.uploader.upload(filePath, { folder: 'my_uploads' });
+
+    // Save to PostgreSQL
+    const query = `
+      INSERT INTO goods (sendername, receivername, trackingnumber, description, arrivetime, destination, status, image, public_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING *
+    `;
+    const values = [
+      senderName,
+      receiverName,
+      trackingNumber,
+      description,
+      arriveTime,
+      destination,
+      status,
+      uploadResult.secure_url,   // ✅ image URL
+      uploadResult.public_id,    // ✅ useful for deletion later
+    ];
+
+    const dbResult = await db.query(query, values);
+
+    res.status(200).json({
+      success: true,
+      data: dbResult.rows[0],
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
 router.put('/api/goods/location', async (req, res) => {
   const { id } = req.query;
   const { location } = req.body;
@@ -69,16 +98,27 @@ router.delete("/api/delete", async (req, res) => {
   const { id } = req.query;
 
   try {
-    const result = await db.query(
+    // 1️⃣ Get the record first to retrieve public_id
+    const recordResult = await db.query("SELECT public_id FROM goods WHERE id = $1", [id]);
+
+    if (recordResult.rows.length === 0) {
+      return res.status(404).json({ msg: "Record not found" });
+    }
+
+    const { public_id } = recordResult.rows[0];
+
+    // 2️⃣ Delete image from Cloudinary if public_id exists
+    if (public_id) {
+      await cloudinary.uploader.destroy(public_id);
+    }
+
+    // 3️⃣ Delete the record from PostgreSQL
+    const deleteResult = await db.query(
       "DELETE FROM goods WHERE id = $1 RETURNING *",
       [id]
     );
 
-    if (result.rows.length > 0) {
-      res.status(200).json({ msg: "Deleted successfully" });
-    } else {
-      res.status(404).json({ msg: "Record not found" });
-    }
+    res.status(200).json({ msg: "Deleted successfully", data: deleteResult.rows[0] });
   } catch (error) {
     console.error("Error deleting record:", error);
     res.status(500).json({ msg: "Server error" });

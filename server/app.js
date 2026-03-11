@@ -13,16 +13,19 @@ app.use(goodsRoute)
 app.use(contact)
 app.use(loginRoute)
 
-// async function productionTable() {
-//   try {
-//     await db.query("DROP TABLE IF EXISTS goods");
-//     console.log("✅ goods table dropped");
-//   } catch (error) {
-//     console.error("❌ Error dropping table:", error);
-//   }
-// }
+async function productionTable() {
+  try {
+    await Promise.all([
+        await db.query("ALTER TABLE goods ADD COLUMN  IF NOT EXISTS image TEXT"),
+        await db.query("ALTER TABLE goods ADD COLUMN  IF NOT EXISTS public_id TEXT")
+    ])
+    console.log("✅ 'image'and 'public_id' column added to goods table");
+  } catch (error) {
+    console.error("❌ Error adding column to goods table:", error);
+  }
+}
 
-// productionTable()
+productionTable()
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, ()=>{

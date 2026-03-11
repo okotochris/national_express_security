@@ -1,10 +1,15 @@
 "use client";
 
 import { useState } from "react";
+<<<<<<< HEAD
+=======
+import { useParams } from "next/navigation";
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
 import Header from "../component/header";
 import Footer from "../component/footer";
 import Image from "next/image";
 
+<<<<<<< HEAD
 const news = [
   {
     title: "Digital Solutions",
@@ -30,6 +35,111 @@ const news = [
 ];
 
 export default function NewsPage() {
+=======
+type NewsItem = {
+  title: string;
+  image: string;
+  content: string;
+  date: string;
+  url: string;
+};
+
+type Translations = {
+  [key: string]: {
+    heroTitle: string;
+    heroDesc: string;
+    heroText: string;
+    news: NewsItem[];
+    viewAll: string;
+    latestUpdates: string;
+    exploreText: string;
+    readMore: string;
+  };
+};
+
+// Original translations
+const translations: Translations = {
+  en: {
+    heroTitle: "News & Insights",
+    heroDesc:
+      "Stay updated with the latest developments in logistics, digital transformation, and global events from NES.",
+    heroText: "View All News",
+    news: [
+      {
+        title: "Digital Solutions",
+        image: "/presenting.jpg",
+        content:
+          "Tracking Your Shipment: Sign Up for Automatic Email Updates on nationalexpresssecurity.com",
+        date: "08/04/2025",
+        url: "/news/digital",
+      },
+      {
+        title: "United States",
+        image: "/image6.jpg",
+        content:
+          "NES's Andre Simha to Discuss Collaboration and Digital Transformation at MANIFEST24 in Las Vegas",
+        date: "01/19/2024",
+        url: "/news/united",
+      },
+      {
+        title: "United Arab Emirates",
+        image: "/image1.jpg",
+        content:
+          "NES’s CDIO André Simha to Speak at Future-Proof Technologies, Dubai",
+        date: "11/29/2023",
+        url: "/news/arab",
+      },
+    ],
+    viewAll: "View All News",
+    latestUpdates: "Latest Updates",
+    exploreText: "Explore our recent announcements, events, and industry insights.",
+    readMore: "Read More →",
+  },
+  fr: {
+    heroTitle: "Actualités et Insights",
+    heroDesc:
+      "Restez informé des derniers développements en logistique, transformation numérique et événements mondiaux de NES.",
+    heroText: "Voir Toutes les Actualités",
+    news: [
+      {
+        title: "Solutions Numériques",
+        image: "/presenting.jpg",
+        content:
+          "Suivi de votre expédition : Inscrivez-vous pour recevoir des mises à jour par email sur nationalexpresssecurity.com",
+        date: "08/04/2025",
+        url: "/news/digital",
+      },
+      {
+        title: "États-Unis",
+        image: "/image6.jpg",
+        content:
+          "Andre Simha de NES discutera de la collaboration et de la transformation numérique au MANIFEST24 à Las Vegas",
+        date: "01/19/2024",
+        url: "/news/united",
+      },
+      {
+        title: "Émirats Arabes Unis",
+        image: "/image1.jpg",
+        content:
+          "Le CDIO de NES, André Simha, prendra la parole au Future-Proof Technologies, Dubaï",
+        date: "11/29/2023",
+        url: "/news/arab",
+      },
+    ],
+    viewAll: "Voir Toutes les Actualités",
+    latestUpdates: "Dernières Actualités",
+    exploreText: "Découvrez nos annonces récentes, événements et insights du secteur.",
+    readMore: "Lire la suite →",
+  },
+  // Add more languages if needed
+};
+
+export default function NewsPage() {
+  const params = useParams();
+  const locale = (params.locale as string) || "en"; // get locale from URL
+  const t = translations[locale] || translations.en;
+
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   const [selectedNews, setSelectedNews] = useState<number | null>(null);
 
   return (
@@ -40,6 +150,7 @@ export default function NewsPage() {
       <section className="relative bg-gradient-to-r from-gray-800 to-gray-900 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative max-w-7xl mx-auto px-6 text-center">
+<<<<<<< HEAD
           <h1 className="text-5xl font-bold mb-6">News & Insights</h1>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
             Stay updated with the latest developments in logistics, digital transformation, and global events from NES.
@@ -47,12 +158,23 @@ export default function NewsPage() {
           <button className="bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
             View All News
           </button>
+=======
+          <h1 className="text-5xl font-bold mb-6">{t.heroTitle}</h1>
+          <p className="text-xl mb-8 max-w-3xl mx-auto">{t.heroDesc}</p>
+          <a
+            href={`/${locale}/news`}
+            className="bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+          >
+            {t.heroText}
+          </a>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
         </div>
       </section>
 
       {/* News Section */}
       <section className="py-16 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-12">
+<<<<<<< HEAD
           <h2 className="text-4xl font-semibold">Latest Updates</h2>
           <p className="text-slate-600 mt-4">
             Explore our recent announcements, events, and industry insights.
@@ -60,6 +182,13 @@ export default function NewsPage() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {news.map((item, index) => (
+=======
+          <h2 className="text-4xl font-semibold">{t.latestUpdates}</h2>
+          <p className="text-slate-600 mt-4">{t.exploreText}</p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {t.news.map((item, index) => (
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             <div
               key={item.title}
               className={`relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${
@@ -69,11 +198,21 @@ export default function NewsPage() {
               onMouseLeave={() => setSelectedNews(null)}
             >
               {/* Image */}
+<<<<<<< HEAD
               <div className="relative h-48 bg-gray-200">
                 <Image
                   src={item.image}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+=======
+              <div className="relative h-48 w-full bg-gray-200">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  width={600}
+                  height={400}
+                  className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
                 />
                 <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity" />
               </div>
@@ -82,6 +221,7 @@ export default function NewsPage() {
               <div className="p-6">
                 <h3 className="font-bold text-xl mb-2 text-gray-900">{item.title}</h3>
                 <p className="text-sm text-gray-500 mb-2">{item.date}</p>
+<<<<<<< HEAD
                 <p className={`text-gray-700 mb-4 transition-all duration-300 ${
                   selectedNews === index ? "line-clamp-none" : "line-clamp-2"
                 }`}>
@@ -92,6 +232,20 @@ export default function NewsPage() {
                   className="text-blue-600 font-semibold hover:underline inline-block"
                 >
                   Read More →
+=======
+                <p
+                  className={`text-gray-700 mb-4 transition-all duration-300 ${
+                    selectedNews === index ? "line-clamp-none" : "line-clamp-2"
+                  }`}
+                >
+                  {item.content}
+                </p>
+                <a
+                  href={`/${locale}${item.url}`}
+                  className="text-blue-600 font-semibold hover:underline inline-block"
+                >
+                  {t.readMore}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
                 </a>
               </div>
             </div>
@@ -102,4 +256,8 @@ export default function NewsPage() {
       <Footer />
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10

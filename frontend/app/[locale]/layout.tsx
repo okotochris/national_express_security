@@ -1,20 +1,19 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
+import { notFound } from "next/navigation";
+import { locales, Locale } from "../../i18n/config";
 
-export async function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'de' }, { locale: 'zh' }];
+interface LocaleLayoutProps {
+  children: ReactNode;
+  params: Promise<{ locale: string }>; // <-- always a Promise
 }
 
-export default async function LocaleLayout({
-  children,
-  params
-}: {
-  children: ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  return (
-    <html lang={locale} suppressHydrationWarning>
-      <body>{children}</body>
-    </html>
-  );
+export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+  const awaitedParams = await params; // await the promise
+  const { locale } = awaitedParams;
+
+  if (!locales.includes(locale as Locale)) {
+    notFound();
+  }
+
+  return <div data-locale={locale}>{children}</div>;
 }

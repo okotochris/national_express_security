@@ -1,11 +1,162 @@
 "use client";
 
+<<<<<<< HEAD
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "../component/header";
 import Footer from "../component/footer";
 
 export default function CarPartsPage() {
+=======
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import Header from "../component/header";
+import Footer from "../component/footer";
+
+interface Capability {
+  title: string;
+  desc: string;
+}
+
+interface StaticContent {
+  hero: {
+    title: string;
+    description: string;
+  };
+  about: {
+    title: string;
+    para1: string;
+    para2: string;
+    para3: string;
+  };
+  capabilities: {
+    title: string;
+    subtitle: string;
+  };
+  cta: {
+    title: string;
+    description: string;
+    button: string;
+  };
+}
+
+export default function CarPartsPage() {
+  const params = useParams();
+  const rawLocale = params?.locale;
+  const locale = Array.isArray(rawLocale) ? rawLocale[0] : rawLocale || "en";
+
+  // Static English content
+  const staticContent: StaticContent = {
+    hero: {
+      title: "Car Parts Logistics",
+      description: "Precision-driven logistics for the automotive industry — from engines to the smallest components.",
+    },
+    about: {
+      title: "Powering the Automotive Supply Chain",
+      para1: "We manage the fast-paced demands of the automotive sector — delivering engines, components, and parts efficiently from global suppliers to assembly plants and distributors.",
+      para2: "Our logistics solutions ensure just-in-time (JIT) delivery to reduce downtime, increase manufacturing efficiency, and optimize cost. Every shipment is tracked and handled with precision.",
+      para3: "Whether it’s inbound supply for manufacturers or outbound delivery to retailers, we keep your automotive supply chain moving — safely and reliably.",
+    },
+    capabilities: {
+      title: "Automotive Logistics Expertise",
+      subtitle: "We connect manufacturers, suppliers, and distributors through a smart, efficient logistics network built for speed and precision.",
+    },
+    cta: {
+      title: "Driving Efficiency in Every Shipment",
+      description: "Partner with us for automotive logistics that keep production lines running and distribution on schedule.",
+      button: "Contact Us",
+    },
+  };
+
+  const capabilities: Omit<Capability, "icon">[] = [
+    { title: "Just-in-Time Delivery", desc: "Streamlined delivery processes to ensure parts arrive exactly when needed for production." },
+    { title: "Warehousing & Distribution", desc: "Dedicated storage and fulfillment centers for automotive components of all sizes." },
+    { title: "International Freight", desc: "Sea, air, and land freight options for global automotive supply chains." },
+    { title: "Customs & Compliance", desc: "Expert handling of customs documentation and import/export regulations." },
+    { title: "Real-Time Tracking", desc: "Track every shipment and delivery milestone with digital transparency." },
+    { title: "Reverse Logistics", desc: "Efficient management of returns, recalls, and component recycling." },
+  ];
+
+  const [translatedStatic, setTranslatedStatic] = useState<StaticContent>(staticContent);
+  const [translatedCapabilities, setTranslatedCapabilities] = useState<Capability[]>(capabilities);
+
+  useEffect(() => {
+    async function translateAll() {
+      if (locale === "en") {
+        setTranslatedStatic(staticContent);
+        setTranslatedCapabilities(capabilities);
+        return;
+      }
+
+      try {
+        // Prepare payload for static content
+        const staticPayload = Object.entries(staticContent).flatMap(([sectionKey, sectionValue]) =>
+          Object.entries(sectionValue).map(([key, text]) => ({
+            key: `${sectionKey}.${key}`,
+            text,
+          }))
+        );
+
+        // Capabilities as array {title, content: desc}
+        const capabilitiesPayload = capabilities.map((c) => ({ title: c.title, content: c.desc }));
+
+        const fullPayload = { static: staticPayload, capabilities: capabilitiesPayload };
+        console.log("Sending car parts payload:", fullPayload);
+
+        const res = await fetch("/api/translate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: fullPayload, targetLocale: locale.toUpperCase() }),
+        });
+
+        if (!res.ok) {
+          console.error("Car parts translation failed:", res.statusText);
+          setTranslatedStatic(staticContent);
+          setTranslatedCapabilities(capabilities);
+          return;
+        }
+
+        const data = await res.json();
+        console.log("Car parts translated:", data);
+
+        // Merge static
+        const mergedStatic: Partial<StaticContent> = {
+          hero: { title: "", description: "" },
+          about: { title: "", para1: "", para2: "", para3: "" },
+          capabilities: { title: "", subtitle: "" },
+          cta: { title: "", description: "", button: "" },
+        };
+        (data.static || staticPayload).forEach((item: any) => {
+          const [sectionKey, subKey] = item.key.split(".");
+          const section = sectionKey as keyof StaticContent;
+          if (mergedStatic[section]) {
+            (mergedStatic[section] as any)[subKey] = item.text;
+          }
+        });
+        setTranslatedStatic(mergedStatic as StaticContent);
+
+        // Merge capabilities
+        const mergedCapabilities = (data.capabilities || capabilitiesPayload).map((item: any, i: number) => ({
+          ...capabilities[i],
+          title: item.title,
+          desc: item.content,
+        }));
+        setTranslatedCapabilities(mergedCapabilities);
+
+      } catch (err) {
+        console.error("Car parts translation error:", err);
+        setTranslatedStatic(staticContent);
+        setTranslatedCapabilities(capabilities);
+      }
+    }
+
+    translateAll();
+  }, [locale]);
+
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   return (
     <>
       <Header />
@@ -14,7 +165,11 @@ export default function CarPartsPage() {
       <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <Image
           src="/carparts.jpg"
+<<<<<<< HEAD
           alt="Car parts logistics"
+=======
+          alt={translatedStatic.hero.title}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           fill
           className="object-cover"
           priority
@@ -26,10 +181,17 @@ export default function CarPartsPage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-extrabold text-white mb-4"
           >
+<<<<<<< HEAD
             Car Parts Logistics
           </motion.h1>
           <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
             Precision-driven logistics for the automotive industry — from engines to the smallest components.
+=======
+            {translatedStatic.hero.title}
+          </motion.h1>
+          <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
+            {translatedStatic.hero.description}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
       </section>
@@ -57,6 +219,7 @@ export default function CarPartsPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
+<<<<<<< HEAD
               Powering the Automotive Supply Chain
             </h2>
             <p className="text-slate-700 leading-relaxed mb-4">
@@ -70,6 +233,18 @@ export default function CarPartsPage() {
             <p className="text-slate-700 leading-relaxed">
               Whether it’s inbound supply for manufacturers or outbound delivery to retailers, we keep your
               automotive supply chain moving — safely and reliably.
+=======
+              {translatedStatic.about.title}
+            </h2>
+            <p className="text-slate-700 leading-relaxed mb-4">
+              {translatedStatic.about.para1}
+            </p>
+            <p className="text-slate-700 leading-relaxed mb-4">
+              {translatedStatic.about.para2}
+            </p>
+            <p className="text-slate-700 leading-relaxed">
+              {translatedStatic.about.para3}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             </p>
           </motion.div>
         </div>
@@ -79,14 +254,22 @@ export default function CarPartsPage() {
       <section className="py-20 bg-white px-6">
         <div className="max-w-6xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+<<<<<<< HEAD
             Automotive Logistics Expertise
           </h2>
           <p className="text-slate-600 max-w-3xl mx-auto">
             We connect manufacturers, suppliers, and distributors through a smart, efficient logistics network built for speed and precision.
+=======
+            {translatedStatic.capabilities.title}
+          </h2>
+          <p className="text-slate-600 max-w-3xl mx-auto">
+            {translatedStatic.capabilities.subtitle}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+<<<<<<< HEAD
           {[
             {
               title: "Just-in-Time Delivery",
@@ -113,6 +296,9 @@ export default function CarPartsPage() {
               desc: "Efficient management of returns, recalls, and component recycling.",
             },
           ].map((item, i) => (
+=======
+          {translatedCapabilities.map((item, i) => (
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -131,6 +317,7 @@ export default function CarPartsPage() {
 
       {/* CTA Section */}
       <section className="bg-emerald-600 py-16 text-center text-white">
+<<<<<<< HEAD
         <h2 className="text-3xl font-bold mb-4">
           Driving Efficiency in Every Shipment
         </h2>
@@ -143,9 +330,24 @@ export default function CarPartsPage() {
         >
           Contact Us
         </a>
+=======
+        <h2 className="text-3xl font-bold mb-4">{translatedStatic.cta.title}</h2>
+        <p className="max-w-2xl mx-auto mb-6 text-slate-100">
+          {translatedStatic.cta.description}
+        </p>
+        <Link href="/contact">
+          <button className="bg-white text-emerald-700 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition">
+            {translatedStatic.cta.button}
+          </button>
+        </Link>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
       </section>
 
       <Footer />
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10

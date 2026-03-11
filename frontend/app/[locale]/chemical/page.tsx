@@ -1,11 +1,162 @@
 "use client";
 
+<<<<<<< HEAD
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "../component/header";
 import Footer from "../component/footer";
 
 export default function ChemicalPage() {
+=======
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import Header from "../component/header";
+import Footer from "../component/footer";
+
+interface Capability {
+  title: string;
+  desc: string;
+}
+
+interface StaticContent {
+  hero: {
+    title: string;
+    description: string;
+  };
+  about: {
+    title: string;
+    para1: string;
+    para2: string;
+    para3: string;
+  };
+  capabilities: {
+    title: string;
+    subtitle: string;
+  };
+  cta: {
+    title: string;
+    description: string;
+    button: string;
+  };
+}
+
+export default function ChemicalPage() {
+  const params = useParams();
+  const rawLocale = params?.locale;
+  const locale = Array.isArray(rawLocale) ? rawLocale[0] : rawLocale || "en";
+
+  // Static English content
+  const staticContent: StaticContent = {
+    hero: {
+      title: "Chemical & Petrochemical Logistics",
+      description: "Specialized handling and secure transport of hazardous and non-hazardous chemicals with safety as our top priority.",
+    },
+    about: {
+      title: "Safe & Efficient Chemical Transport Solutions",
+      para1: "We provide trusted logistics solutions for the chemical and petrochemical sectors — handling raw materials, intermediates, and finished products with utmost care and regulatory compliance.",
+      para2: "Our expertise covers both hazardous and non-hazardous chemicals, using certified equipment, trained personnel, and advanced safety monitoring to ensure every shipment meets global standards.",
+      para3: "With optimized routing, temperature control, and real-time tracking, we guarantee safe, reliable, and cost-efficient movement of chemical goods across global supply chains.",
+    },
+    capabilities: {
+      title: "Our Chemical Logistics Capabilities",
+      subtitle: "Comprehensive and compliant logistics solutions for the safe transport, storage, and management of chemical products.",
+    },
+    cta: {
+      title: "Partner with Us for Safe Chemical Logistics",
+      description: "Your safety is our mission. Trust us to handle every chemical shipment with precision, compliance, and care.",
+      button: "Contact Us",
+    },
+  };
+
+  const capabilities: Omit<Capability, "icon">[] = [
+    { title: "Hazardous Materials Transport", desc: "Certified handling and transport of flammable, corrosive, and reactive chemicals under strict safety guidelines." },
+    { title: "Temperature-Controlled Shipping", desc: "Maintain optimal temperature for sensitive chemicals and petrochemical products during transit." },
+    { title: "Bulk Liquid Transport", desc: "Safe movement of bulk chemicals using ISO tanks, flexi-tanks, and chemical-grade containers." },
+    { title: "Regulatory Compliance", desc: "Full adherence to international chemical transport standards, including ADR, IMDG, and IATA regulations." },
+    { title: "Warehousing & Segregation", desc: "Specialized storage facilities designed for safe segregation of chemical types and hazard classes." },
+    { title: "Safety & Environmental Protection", desc: "Robust emergency response protocols and sustainability-focused logistics operations." },
+  ];
+
+  const [translatedStatic, setTranslatedStatic] = useState<StaticContent>(staticContent);
+  const [translatedCapabilities, setTranslatedCapabilities] = useState<Capability[]>(capabilities);
+
+  useEffect(() => {
+    async function translateAll() {
+      if (locale === "en") {
+        setTranslatedStatic(staticContent);
+        setTranslatedCapabilities(capabilities);
+        return;
+      }
+
+      try {
+        // Prepare payload for static content
+        const staticPayload = Object.entries(staticContent).flatMap(([sectionKey, sectionValue]) =>
+          Object.entries(sectionValue).map(([key, text]) => ({
+            key: `${sectionKey}.${key}`,
+            text,
+          }))
+        );
+
+        // Capabilities as array {title, content: desc}
+        const capabilitiesPayload = capabilities.map((c) => ({ title: c.title, content: c.desc }));
+
+        const fullPayload = { static: staticPayload, capabilities: capabilitiesPayload };
+        console.log("Sending chemical payload:", fullPayload);
+
+        const res = await fetch("/api/translate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: fullPayload, targetLocale: locale.toUpperCase() }),
+        });
+
+        if (!res.ok) {
+          console.error("Chemical translation failed:", res.statusText);
+          setTranslatedStatic(staticContent);
+          setTranslatedCapabilities(capabilities);
+          return;
+        }
+
+        const data = await res.json();
+        console.log("Chemical translated:", data);
+
+        // Merge static
+        const mergedStatic: Partial<StaticContent> = {
+          hero: { title: "", description: "" },
+          about: { title: "", para1: "", para2: "", para3: "" },
+          capabilities: { title: "", subtitle: "" },
+          cta: { title: "", description: "", button: "" },
+        };
+        (data.static || staticPayload).forEach((item: any) => {
+          const [sectionKey, subKey] = item.key.split(".");
+          const section = sectionKey as keyof StaticContent;
+          if (mergedStatic[section]) {
+            (mergedStatic[section] as any)[subKey] = item.text;
+          }
+        });
+        setTranslatedStatic(mergedStatic as StaticContent);
+
+        // Merge capabilities
+        const mergedCapabilities = (data.capabilities || capabilitiesPayload).map((item: any, i: number) => ({
+          ...capabilities[i],
+          title: item.title,
+          desc: item.content,
+        }));
+        setTranslatedCapabilities(mergedCapabilities);
+
+      } catch (err) {
+        console.error("Chemical translation error:", err);
+        setTranslatedStatic(staticContent);
+        setTranslatedCapabilities(capabilities);
+      }
+    }
+
+    translateAll();
+  }, [locale]);
+
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
   return (
     <>
       <Header />
@@ -14,7 +165,11 @@ export default function ChemicalPage() {
       <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
         <Image
           src="/chemical.jpg"
+<<<<<<< HEAD
           alt="Chemical and Petrochemical Logistics"
+=======
+          alt={translatedStatic.hero.title}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           fill
           className="object-cover"
           priority
@@ -26,10 +181,17 @@ export default function ChemicalPage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-extrabold text-white mb-4"
           >
+<<<<<<< HEAD
             Chemical & Petrochemical Logistics
           </motion.h1>
           <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
             Specialized handling and secure transport of hazardous and non-hazardous chemicals with safety as our top priority.
+=======
+            {translatedStatic.hero.title}
+          </motion.h1>
+          <p className="text-slate-200 text-lg md:text-xl max-w-2xl">
+            {translatedStatic.hero.description}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
       </section>
@@ -57,6 +219,7 @@ export default function ChemicalPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
+<<<<<<< HEAD
               Safe & Efficient Chemical Transport Solutions
             </h2>
             <p className="text-slate-700 leading-relaxed mb-4">
@@ -67,6 +230,18 @@ export default function ChemicalPage() {
             </p>
             <p className="text-slate-700 leading-relaxed">
               With optimized routing, temperature control, and real-time tracking, we guarantee safe, reliable, and cost-efficient movement of chemical goods across global supply chains.
+=======
+              {translatedStatic.about.title}
+            </h2>
+            <p className="text-slate-700 leading-relaxed mb-4">
+              {translatedStatic.about.para1}
+            </p>
+            <p className="text-slate-700 leading-relaxed mb-4">
+              {translatedStatic.about.para2}
+            </p>
+            <p className="text-slate-700 leading-relaxed">
+              {translatedStatic.about.para3}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             </p>
           </motion.div>
         </div>
@@ -76,14 +251,22 @@ export default function ChemicalPage() {
       <section className="py-20 bg-white px-6">
         <div className="max-w-6xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+<<<<<<< HEAD
             Our Chemical Logistics Capabilities
           </h2>
           <p className="text-slate-600 max-w-3xl mx-auto">
             Comprehensive and compliant logistics solutions for the safe transport, storage, and management of chemical products.
+=======
+            {translatedStatic.capabilities.title}
+          </h2>
+          <p className="text-slate-600 max-w-3xl mx-auto">
+            {translatedStatic.capabilities.subtitle}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+<<<<<<< HEAD
           {[
             {
               title: "Hazardous Materials Transport",
@@ -110,6 +293,9 @@ export default function ChemicalPage() {
               desc: "Robust emergency response protocols and sustainability-focused logistics operations.",
             },
           ].map((item, i) => (
+=======
+          {translatedCapabilities.map((item, i) => (
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -128,6 +314,7 @@ export default function ChemicalPage() {
 
       {/* CTA Section */}
       <section className="bg-emerald-600 py-16 text-center text-white">
+<<<<<<< HEAD
         <h2 className="text-3xl font-bold mb-4">
           Partner with Us for Safe Chemical Logistics
         </h2>
@@ -140,9 +327,24 @@ export default function ChemicalPage() {
         >
           Contact Us
         </a>
+=======
+        <h2 className="text-3xl font-bold mb-4">{translatedStatic.cta.title}</h2>
+        <p className="max-w-2xl mx-auto mb-6 text-slate-100">
+          {translatedStatic.cta.description}
+        </p>
+        <Link href="/contact">
+          <button className="bg-white text-emerald-700 px-6 py-3 rounded-md font-semibold hover:bg-slate-100 transition">
+            {translatedStatic.cta.button}
+          </button>
+        </Link>
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
       </section>
 
       <Footer />
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e5ef5b6b706a18aca6a849943993395dbf747f10
