@@ -11,7 +11,8 @@ async function goods(){
             arriveTime TEXT,
             destination TEXT,
             status TEXT,
-            location TEXT
+            location TEXT,
+            image TEXT
             )`)
          console.log("✅ Goods table created");
     } catch (err) {
