@@ -98,7 +98,7 @@ export default function HomePage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg"
+      className="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg"
     >
       National Express Security <br /> 
       <span className="text-emerald-400">Fast, Reliable & Trackable</span>
