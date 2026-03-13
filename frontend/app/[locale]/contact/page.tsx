@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Users,
   PhoneCall,
+  Send,
 } from "lucide-react";
 import Header from "../component/header";
 import { motion } from "framer-motion";
@@ -73,7 +74,7 @@ export default function ContactSection() {
       messagePlaceholder: "Tell us how we can help you...",
       namePlaceholder: "John Doe",
       emailPlaceholder: "you@example.com",
-      phonePlaceholder: "+234 800 000 0000",
+      phonePlaceholder: "+44 800 000 0000",
     },
     team: {
       sectionTitle: "Our Team & Management",
@@ -207,6 +208,10 @@ export default function ContactSection() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="w-5 h-5 text-emerald-600" />
+                  <span>nationalexpress.org@aol.com</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-emerald-600" />
                   <span>admin@nationalexpresssecurity.com</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -217,6 +222,17 @@ export default function ContactSection() {
                   <Globe className="w-5 h-5 text-emerald-600" />
                   <span>www.nationalexpresssecurity.com</span>
                 </div>
+               <div className="flex items-center gap-2">
+                <a
+                  href="https://t.me/Nationalexpressandsecurity"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Send className="w-5 h-5 text-emerald-600" />
+                  <span>Telegram</span>
+                </a>
+              </div>
               </div>
             </div>
 

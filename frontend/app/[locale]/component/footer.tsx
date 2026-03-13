@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 export default function Footer() {
-  const [selectedCountry, setSelectedCountry] = useState("United States");
-  const [states, setStates] = useState(countries[0].states);
+  const [selectedCountry, setSelectedCountry] = useState("United Kingdom");
+  const [states, setStates] = useState(countries[8].states);
   const [isLoading, setIsLoading] = useState(false); // Simple loading state
 
   // Get current locale from URL params
