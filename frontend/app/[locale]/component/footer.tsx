@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 export default function Footer() {
-  const [selectedCountry, setSelectedCountry] = useState("United Kingdom");
+  const [selectedCountry, setSelectedCountry] = useState("United States");
   const [states, setStates] = useState(countries[0].states);
   const [isLoading, setIsLoading] = useState(false); // Simple loading state
 
