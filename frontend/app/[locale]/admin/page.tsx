@@ -273,7 +273,7 @@ export default function AdminDashboard() {
             </thead>
             <tbody>
               {goods.map((g) => (
-                <tr key={g.id} className="border-b hover:bg-gray-50">
+                <tr key={g.id} className="border-b">
                   <td className="p-3">{g.trackingnumber}</td>
                   <td className="p-3">{g.sendername}</td>
                   <td className="p-3">{g.receivername}</td>
