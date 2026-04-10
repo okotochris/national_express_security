@@ -259,8 +259,8 @@ export default function AdminDashboard() {
         {/* Goods Table */}
         <div className="overflow-x-auto mt-6">
           <table className="w-full border-collapse text-left">
-            <thead>
-              <tr className="bg-gray-100">
+            <thead className="bg-white dark:bg-gray-900 text-white dark:text-gray-900">
+              <tr className="bg-gray-100 dark:bg-gray-900 text-white dark:text-white">
                 <th className="p-3">Tracking Number</th>
                 <th className="p-3">Sender</th>
                 <th className="p-3">Receiver</th>
