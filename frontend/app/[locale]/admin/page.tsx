@@ -185,7 +185,7 @@ export default function AdminDashboard() {
             
             <div className="bg-white p-6 rounded-lg w-full max-w-lg">
                <div className="h-9"></div>
-              <h2 className="text-xl font-bold mb-4">Register Goods</h2>
+              <h2 className="text-xl text-black font-bold mb-4">Register Goods</h2>
 
               <form onSubmit={handleRegister} className="grid gap-3">
                 {Object.keys(formData).map((key) => {
@@ -194,10 +194,11 @@ export default function AdminDashboard() {
 
                   return (
                     <input
+                   
                       key={key}
                       name={key}
                       placeholder={key.replace(/([A-Z])/g, " $1")}
-                      className="border p-2 rounded"
+                      className="border p-2 rounded text-black"
                       onChange={handleInputChange}
                       value={formData[key as keyof FormData] as string} // safe type cast
                     />
@@ -209,7 +210,7 @@ export default function AdminDashboard() {
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="border p-2 rounded"
+                  className="border p-2 rounded text-black"
                 >
                   <option value="1">Ordered</option>
                   <option value="2">In Transit</option>
@@ -222,7 +223,7 @@ export default function AdminDashboard() {
                   type="file"
                   name="image"
                   accept="image/*"
-                  className="border p-2 rounded"
+                  className="border p-2 rounded text-black"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) {
