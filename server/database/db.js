@@ -25,12 +25,13 @@ new pg.Client({
 
 
 db.connect()
-.then(result=>{
-    console.log("✅ connnected to db")
-    user()
-    goods()
-}).catch(err=>{
-    console.log(err)
-})
+.then(async () => {
+    console.log("✅ connected to db")
 
+    await user()
+    await goods()
+})
+.catch(err => {
+    console.error("DB error:", err)
+})
 module.exports = db;
